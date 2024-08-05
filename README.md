@@ -8,6 +8,8 @@
 
 - 08/05/2024
   - app creation
+  - created basic app structure and folders
+    -spread footer and header to comp files
 
 ---
 
