@@ -15,3 +15,12 @@
     background-color: #333;
   }
 }
+
+/* Add these new styles */
+body {
+  @apply overflow-x-hidden;
+}
+
+main {
+  @apply transition-all duration-300;
+}
