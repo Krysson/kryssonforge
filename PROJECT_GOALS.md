@@ -128,6 +128,15 @@
 
 ## Misc Requirements
 
+- AI integration
+  - AI search
+  - AI context suggestions
+    - New Tasks
+    - project Next Steps
+    - Project timing suggestions
+    - Meeting & Contact suggestions
+  - Local AI or API?
+    - May have to be server local with instance per Company for context learning and integration
 - Mobile responsive application
 - Mobile Notifications
   - project status
