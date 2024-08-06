@@ -1,0 +1,75 @@
+// This is THE NEW Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//MONGODB Schema reference: https://www.prisma.io/docs/orm/reference/prisma-schema-reference#mongodb-2
+
+//THIS IS FOR SET UP AND TESTING !!!!
+// Shows how users can be related to tasks and comments check below
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// DO NOT DEPLOY YET - DO NOT DEPLOY YET
+
+// Roles
+enum Role {
+  User
+  FieldUser
+  ProjectManager
+  Estimator
+  ADMIN
+}
+
+// Users/Employees
+
+model Users {
+  id      String   @id @default(cuid()) @map("_id") @db.ObjectId
+  first_name  String
+  last_name String
+  role  Role  @default(User)
+  email   String   @unique
+  cell_phone    String @unique
+  address Address?
+  tasks   Tasks[]
+}
+// Address is an embedded document
+type Address {
+  street String
+  city   String
+  state  String
+  zip    String
+}
+
+
+// Tasks Table w/ relations to Users
+type Tasks {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  body String
+  due_date Date
+  created_date  DateTime  @map("timestamp")
+  owner Users @relation(fields: [ownerId], references: [id])
+  ownerId String @db.ObjectId
+}
+
+
+// Task Comments w/ relations to Tasks
+model TaskComment {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  comment String
+  author  Users @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  task    Tasks   @relation(fields: [taskId], references: [id])
+  taskId  String @db.ObjectId
+}

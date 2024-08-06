@@ -4,18 +4,6 @@
 
 ---
 
-## Log
-
-- 08/05/2024
-  - app creation
-  - created basic app structure and folders
-    -spread footer and header to comp files
-  - Created side bar menu
-  - created OLD folder for files & added to gitignore
-  - Installed Lucide React Icons and attached to side bar
-
----
-
 ## Getting Started
 
 First, run the development server:
