@@ -11,6 +11,8 @@ import {
   FolderGit2,
   ListTodo,
   FileStack,
+  LogIn,
+  UserPlus,
   User
 } from 'lucide-react'
 
@@ -109,7 +111,9 @@ const Sidebar = () => {
                 className={`w-full mb-2 hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
                   isCollapsed ? 'px-2' : 'px-4'
                 }`}>
-                {isCollapsed ? 'In' : 'Sign In'}{' '}
+                {' '}
+                <LogIn />
+                {!isCollapsed && 'Sign In'}{' '}
                 {/* Display the appropriate label based on the sidebar collapse state */}
               </Button>
             </SignInButton>
@@ -120,7 +124,8 @@ const Sidebar = () => {
                 className={`w-full hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
                   isCollapsed ? 'px-2' : 'px-4'
                 }`}>
-                {isCollapsed ? 'Up' : 'Sign Up'}{' '}
+                <UserPlus />
+                {!isCollapsed && 'Sign Up'}{' '}
                 {/* Display the appropriate label based on the sidebar collapse state */}
               </Button>
             </SignUpButton>

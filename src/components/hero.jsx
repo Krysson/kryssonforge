@@ -14,27 +14,26 @@ const Hero = () => {
           <h1 className='text-4xl md:text-6xl font-bold mb-6'>
             Everything all together, in one place, at the same time.
           </h1>
-          <p className='text-xl mb-8'>
+          <p className='text-xl mb-8 mr-5'>
             Improve project workflow and collaboration. Complete more project on time and under
             budget.
           </p>
           <div className='flex space-x-4'>
             <Button className='bg-blue-600 hover:bg-blue-700 text-white'>Get Started</Button>
-            <Button variant='outline'>Download IDE App</Button>
+            {/* <Button variant='outline'>Download IDE App</Button> */}
           </div>
         </div>
         <div className='md:w-1/2'>
           <div className='aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg'>
-            {/* Placeholder for your image */}
             <Image
-              src={'/../../public/images/KFTrans.png'}
-              width={100}
-              height={100}
+              src={'/images/hero.png'}
+              width={1200}
+              height={1200}
               alt='KryssonForge Logo'
             />
-            <div className='flex items-center justify-center h-full text-gray-500'>
+            {/* <div className='flex items-center justify-center h-full text-gray-500'>
               Placeholder for Image
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
