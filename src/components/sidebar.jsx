@@ -29,7 +29,11 @@ const Sidebar = () => {
         isCollapsed ? 'w-16' : 'w-64'
       }`}>
       <div className='flex items-center justify-between p-4'>
-        {!isCollapsed && <h2 className='text-xl font-bold'>Forge Menu</h2>}{' '}
+        {!isCollapsed && (
+          <h2 className='text-xl font-bold'>
+            <span className='text-red-500'>Forge</span>Menu
+          </h2>
+        )}{' '}
         {/* Display the menu title if the sidebar is not collapsed */}
         <Button
           variant='ghost'
