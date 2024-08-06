@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className='page-container'>
       <p className='text-4xl'>CLEAN START</p>
-      {/* <NavigationMenu /> */}
+
       <div className='content'>{/* Your page content goes here */}</div>
     </div>
   )

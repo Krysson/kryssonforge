@@ -2,9 +2,9 @@
 
 ### Tasks
 
-- [ ] move user sign-in & sign up to side bar
-- [ ] Move user avatar to side bar
-- [ ] set put prisma for DB
+- [x] move user sign-in & sign up to side bar
+- [x] Move user avatar to side bar
+- [x] set up prisma for DB
 - [ ] Set up tasks container on mongodb
 - [ ] New/Add Task Page
 - [ ] Edit Task functionality

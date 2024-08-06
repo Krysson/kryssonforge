@@ -15,10 +15,10 @@ import {
 } from 'lucide-react'
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(true)
+  const [isCollapsed, setIsCollapsed] = useState(true) // State variable to track if the sidebar is collapsed or not
 
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed)
+    setIsCollapsed(!isCollapsed) // Function to toggle the sidebar collapse state
   }
 
   return (
@@ -27,22 +27,26 @@ const Sidebar = () => {
         isCollapsed ? 'w-16' : 'w-64'
       }`}>
       <div className='flex items-center justify-between p-4'>
-        {!isCollapsed && <h2 className='text-xl font-bold'>Menu</h2>}
+        {!isCollapsed && <h2 className='text-xl font-bold'>Forge Menu</h2>}{' '}
+        {/* Display the menu title if the sidebar is not collapsed */}
         <Button
           variant='ghost'
           size='icon'
           onClick={toggleSidebar}>
-          {isCollapsed ? <ChevronRight className='h-6 w-6' /> : <ChevronLeft className='h-6 w-6' />}
+          {isCollapsed ? <ChevronRight className='h-6 w-6' /> : <ChevronLeft className='h-6 w-6' />}{' '}
+          {/* Display the appropriate chevron icon based on the sidebar collapse state */}
         </Button>
       </div>
       <nav className='flex flex-col justify-between h-[calc(100%-80px)]'>
         <ul className='space-y-2'>
+          {/* Sidebar navigation items */}
           <li>
             <a
               href='/'
               className='flex items-center p-4 hover:bg-gray-700'>
               <Home className='h-5 w-5' />
-              {!isCollapsed && <span className='ml-4'>Home</span>}
+              {!isCollapsed && <span className='ml-4'>Home</span>}{' '}
+              {/* Display the navigation item label if the sidebar is not collapsed */}
             </a>
           </li>
           <li>
@@ -94,9 +98,10 @@ const Sidebar = () => {
             </a>
           </li>
         </ul>
-        {/* User auth area */}
+        {/* User authentication area */}
         <div className='p-4'>
           <SignedOut>
+            {/* Display sign in and sign up buttons if the user is signed out */}
             <SignInButton mode='modal'>
               <Button
                 variant='default'
@@ -104,7 +109,8 @@ const Sidebar = () => {
                 className={`w-full mb-2 hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
                   isCollapsed ? 'px-2' : 'px-4'
                 }`}>
-                {isCollapsed ? 'In' : 'Sign In'}
+                {isCollapsed ? 'In' : 'Sign In'}{' '}
+                {/* Display the appropriate label based on the sidebar collapse state */}
               </Button>
             </SignInButton>
             <SignUpButton mode='modal'>
@@ -114,17 +120,20 @@ const Sidebar = () => {
                 className={`w-full hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
                   isCollapsed ? 'px-2' : 'px-4'
                 }`}>
-                {isCollapsed ? 'Up' : 'Sign Up'}
+                {isCollapsed ? 'Up' : 'Sign Up'}{' '}
+                {/* Display the appropriate label based on the sidebar collapse state */}
               </Button>
             </SignUpButton>
           </SignedOut>
           <SignedIn>
+            {/* Display user account button if the user is signed in */}
             <div
               className={`flex items-center ${
                 !isCollapsed ? 'justify-between' : 'justify-center'
               }`}>
               <UserButton afterSignOutUrl='/' />
-              {!isCollapsed && <span className='ml-2'>Account</span>}
+              {!isCollapsed && <span className='ml-2'></span>}{' '}
+              {/* Display the account label if the sidebar is not collapsed */}
             </div>
           </SignedIn>
         </div>
