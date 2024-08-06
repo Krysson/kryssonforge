@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import {
   ChevronLeft,
   ChevronRight,
@@ -34,7 +35,7 @@ const Sidebar = () => {
           {isCollapsed ? <ChevronRight className='h-6 w-6' /> : <ChevronLeft className='h-6 w-6' />}
         </Button>
       </div>
-      <nav className='mt-8'>
+      <nav className='flex flex-col justify-between h-[calc(100%-80px)]'>
         <ul className='space-y-2'>
           <li>
             <a
@@ -93,6 +94,40 @@ const Sidebar = () => {
             </a>
           </li>
         </ul>
+        {/* User auth area */}
+        <div className='p-4'>
+          <SignedOut>
+            <SignInButton mode='modal'>
+              <Button
+                variant='default'
+                size='default'
+                className={`w-full mb-2 hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
+                  isCollapsed ? 'px-2' : 'px-4'
+                }`}>
+                {isCollapsed ? 'In' : 'Sign In'}
+              </Button>
+            </SignInButton>
+            <SignUpButton mode='modal'>
+              <Button
+                variant='default'
+                size='default'
+                className={`w-full hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
+                  isCollapsed ? 'px-2' : 'px-4'
+                }`}>
+                {isCollapsed ? 'Up' : 'Sign Up'}
+              </Button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <div
+              className={`flex items-center ${
+                !isCollapsed ? 'justify-between' : 'justify-center'
+              }`}>
+              <UserButton afterSignOutUrl='/' />
+              {!isCollapsed && <span className='ml-2'>Account</span>}
+            </div>
+          </SignedIn>
+        </div>
       </nav>
     </div>
   )
