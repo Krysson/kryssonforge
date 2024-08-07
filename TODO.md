@@ -20,6 +20,13 @@
 - [ ] Start working on user Dashboard
 - [ ] Note taking ability
 - [ ] AI integration
+- [ ] Landing page
+  - [x] Header
+  - [x] Footer
+    - [x] style
+    - [ ] Function
+  - [ ] Card Section
+  - [ ] Pricing section
 
 ---
 

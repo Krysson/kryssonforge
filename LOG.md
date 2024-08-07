@@ -19,3 +19,9 @@
     - UNTESTED
   - Set up Schema for tasks and users
     - NOT DEPLOYED
+
+## 08/07/2024
+
+- Added Hero Section
+- Styled and added Footer section
+  - no Function yet
