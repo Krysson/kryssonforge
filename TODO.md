@@ -9,9 +9,9 @@
 - [ ] New/Add Task Page
 - [ ] Edit Task functionality
 - [ ] Delete tasks functionality
-- [ ] Task Over view Page
-- [ ] task search
-- [ ] completed task view
+- [x] Task Over view Page
+- [x] task search
+- [?] completed task view - Needed? - Maybe an Archive View
 
 ---
 
@@ -25,7 +25,7 @@
   - [x] Footer
     - [x] style
     - [ ] Function
-  - [ ] Card Section
+  - [x] Card Section
   - [ ] Pricing section
 
 ---
