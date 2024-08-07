@@ -23,15 +23,14 @@ const Hero = () => {
             {/* <Button variant='outline'>Download IDE App</Button> */}
           </div>
         </div>
-        <div className='md:w-1/2'>
-          <div className='aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg'>
-            <Image
-              src={'/images/hero.png'}
-              width={1200}
-              height={1200}
-              alt='KryssonForge Logo'
-            />
-          </div>
+
+        <div className='md:h-1/2 md:w-1/2 aspect-w-16 aspect-h-9'>
+          <Image
+            src={'/images/buildAngleTrans.png'}
+            width={1200}
+            height={800}
+            alt='KryssonForge Logo'
+          />
         </div>
       </div>
     </section>
