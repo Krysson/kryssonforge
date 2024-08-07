@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`fixed left-0 top-0 h-full bg-gray-800 text-white transition-all duration-300 ${
+      className={`fixed left-0 top-0 z-50 h-full bg-gray-800 text-white transition-all duration-300 ${
         isCollapsed ? 'w-16' : 'w-64'
       }`}>
       <div className='flex items-center justify-between p-4'>
