@@ -1,0 +1,115 @@
+{
+  "_comment": "This is a sample JSON file for Task data TESTING.",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Prepare Q3 Marketing Report",
+      "body": "Compile and analyze marketing metrics for Q3. Include ROI on campaigns and recommendations for Q4.",
+      "dueDate": "2024-10-15",
+      "userIds": 1,
+      "status": "In Progress",
+      "priority": "High",
+      "category": "Reporting",
+      "projectId": 1
+    },
+    {
+      "id": 2,
+      "title": "Debug Authentication Module",
+      "body": "Investigate and fix the login issues reported by the QA team. Focus on the password reset functionality.",
+      "dueDate": "2024-08-20",
+      "userIds": 2,
+      "status": "To Do",
+      "priority": "Urgent",
+      "category": "Development",
+      "projectId": 2
+    },
+    {
+      "id": 3,
+      "title": "Conduct Annual Performance Reviews",
+      "body": "Schedule and conduct performance reviews for all department heads. Prepare summary reports for the CEO.",
+      "dueDate": "2024-11-30",
+      "userIds": 3,
+      "status": "Not Started",
+      "priority": "Medium",
+      "category": "HR",
+      "projectId": 3
+    },
+    {
+      "id": 4,
+      "title": "Prepare Annual Budget Forecast",
+      "body": "Develop the annual budget forecast for the upcoming fiscal year. Collaborate with all department heads.",
+      "dueDate": "2024-12-01",
+      "userIds": 4,
+      "status": "In Progress",
+      "priority": "High",
+      "category": "Finance",
+      "projectId": 3
+    },
+    {
+      "id": 5,
+      "title": "Launch New Product Website",
+      "body": "Finalize and launch the website for our new product line. Ensure all content is up-to-date and SEO optimized.",
+      "dueDate": "2024-09-01",
+      "userIds": 1,
+      "status": "In Progress",
+      "priority": "High",
+      "category": "Marketing",
+      "projectId": 1
+    },
+    {
+      "id": 6,
+      "title": "Implement New CI/CD Pipeline",
+      "body": "Set up and configure a new CI/CD pipeline to improve our deployment process and reduce downtime.",
+      "dueDate": "2024-10-31",
+      "userIds": 2,
+      "status": "To Do",
+      "priority": "Medium",
+      "category": "DevOps",
+      "projectId": 2
+    },
+    {
+      "id": 7,
+      "title": "Organize Team Building Retreat",
+      "body": "Plan and organize a team building retreat for all employees. Book venue, activities, and manage logistics.",
+      "dueDate": "2024-11-15",
+      "userIds": 3,
+      "status": "In Progress",
+      "priority": "Low",
+      "category": "HR",
+      "projectId": 3
+    },
+    {
+      "id": 8,
+      "title": "Conduct Quarterly Financial Audit",
+      "body": "Perform a comprehensive audit of Q3 financials. Prepare report for board meeting.",
+      "dueDate": "2024-10-20",
+      "userIds": 4,
+      "status": "Not Started",
+      "priority": "High",
+      "category": "Finance",
+      "projectId": 3
+    },
+    {
+      "id": 9,
+      "title": "Redesign Company Newsletter",
+      "body": "Revamp the monthly company newsletter design. Incorporate feedback from the last employee survey.",
+      "dueDate": "2024-09-30",
+      "userIds": 1,
+      "status": "To Do",
+      "priority": "Low",
+      "category": "Internal Communications",
+      "projectId": 1
+    },
+    {
+      "id": 10,
+      "title": "Upgrade Server Infrastructure",
+      "body": "Plan and execute the upgrade of our main server infrastructure to improve performance and security.",
+      "dueDate": "2024-12-15",
+      "userIds": 2,
+      "status": "Not Started",
+      "priority": "High",
+      "category": "IT Infrastructure",
+      "projectId": 2
+    }
+  ]
+}

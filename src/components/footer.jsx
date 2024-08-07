@@ -15,7 +15,7 @@ const Footer = () => {
               </h2>
             </Link>
             <p className='text-gray-400'>
-              Empowering developers with meaningful code feedback and collaboration.
+              Empowering developers with meaningful tools, feedback and collaboration.
             </p>
           </div>
           <div className='col-span-1 md:col-span-3'>

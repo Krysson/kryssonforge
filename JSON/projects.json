@@ -1,0 +1,35 @@
+{
+  "_comment": "This is a sample JSON file for project data TESTING.",
+  "projects": [
+    {
+      "id": 1,
+      "name": "Market Expansion Initiative",
+      "description": "A strategic project to increase our market share and brand awareness through various marketing campaigns and product launches.",
+      "startDate": "2024-07-01",
+      "endDate": "2024-12-31",
+      "status": "In Progress",
+      "userIds": [1, 4],
+      "taskIds": [1, 5, 9]
+    },
+    {
+      "id": 2,
+      "name": "Tech Infrastructure Overhaul",
+      "description": "A comprehensive project to upgrade and modernize our entire tech stack, improving performance, security, and scalability.",
+      "startDate": "2024-08-01",
+      "endDate": "2025-02-28",
+      "status": "In Progress",
+      "userIds": [2],
+      "taskIds": [2, 6, 10]
+    },
+    {
+      "id": 3,
+      "name": "Corporate Restructuring",
+      "description": "A strategic initiative to optimize our organizational structure, improve operational efficiency, and align our workforce with long-term business goals.",
+      "startDate": "2024-09-01",
+      "endDate": "2025-03-31",
+      "status": "Planning",
+      "userIds": [3, 4],
+      "taskIds": [3, 4, 7, 8]
+    }
+  ]
+}

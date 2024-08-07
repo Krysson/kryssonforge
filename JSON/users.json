@@ -1,0 +1,29 @@
+{
+  "_comment": "This is a JSON file with a list of users for TESTING purposes.",
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "email": "alice.j@example.com",
+      "department": "Marketing"
+    },
+    {
+      "id": 2,
+      "name": "Bob Smith",
+      "email": "bob.s@example.com",
+      "department": "Engineering"
+    },
+    {
+      "id": 3,
+      "name": "Carol Martinez",
+      "email": "carol.m@example.com",
+      "department": "Human Resources"
+    },
+    {
+      "id": 4,
+      "name": "David Lee",
+      "email": "david.l@example.com",
+      "department": "Finance"
+    }
+  ]
+}
