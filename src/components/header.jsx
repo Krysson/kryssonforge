@@ -7,7 +7,7 @@ const Header = () => {
       <div className='logo'>
         <Link href='/'>
           <h1 className='text-2xl font-bold mx-5 hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90'>
-            Krysson<span className='text-red-800 font-extrabold'>Forge</span>
+            Krysson<span className='text-red-700 font-extrabold'>Forge</span>
           </h1>
         </Link>
       </div>

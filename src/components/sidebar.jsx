@@ -11,6 +11,8 @@ import {
   FolderGit2,
   ListTodo,
   FileStack,
+  LogIn,
+  UserPlus,
   User
 } from 'lucide-react'
 
@@ -27,7 +29,11 @@ const Sidebar = () => {
         isCollapsed ? 'w-16' : 'w-64'
       }`}>
       <div className='flex items-center justify-between p-4'>
-        {!isCollapsed && <h2 className='text-xl font-bold'>Forge Menu</h2>}{' '}
+        {!isCollapsed && (
+          <h2 className='text-xl font-bold'>
+            <span className='text-red-500'>Forge</span>Menu
+          </h2>
+        )}{' '}
         {/* Display the menu title if the sidebar is not collapsed */}
         <Button
           variant='ghost'
@@ -109,7 +115,9 @@ const Sidebar = () => {
                 className={`w-full mb-2 hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
                   isCollapsed ? 'px-2' : 'px-4'
                 }`}>
-                {isCollapsed ? 'In' : 'Sign In'}{' '}
+                {' '}
+                <LogIn />
+                {!isCollapsed && 'Sign In'}{' '}
                 {/* Display the appropriate label based on the sidebar collapse state */}
               </Button>
             </SignInButton>
@@ -120,7 +128,8 @@ const Sidebar = () => {
                 className={`w-full hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 ${
                   isCollapsed ? 'px-2' : 'px-4'
                 }`}>
-                {isCollapsed ? 'Up' : 'Sign Up'}{' '}
+                <UserPlus />
+                {!isCollapsed && 'Sign Up'}{' '}
                 {/* Display the appropriate label based on the sidebar collapse state */}
               </Button>
             </SignUpButton>
