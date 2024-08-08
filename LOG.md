@@ -25,3 +25,10 @@
 - Added Hero Section
 - Styled and added Footer section
   - no Function yet
+- Added task page
+- Added JSON files for testing
+  - users
+  - tasks
+  - projects
+- styled Tasks page
+- added search bar to tasks page
