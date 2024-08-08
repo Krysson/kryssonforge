@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider, ClerkLoaded, ClerkLoading } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -20,9 +20,16 @@ export default function RootLayout({ children }) {
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang='en'>
         <body className={inter.className}>
-          <Header /> {/* Add the Header component */}
-          <Sidebar /> {/* Add the Sidebar component */}
-          <main className='mt-16 ml-16 p-4 transition-all duration-300'>{children}</main>
+          <ClerkLoading>
+            <div className='fixed top 0 w-screen h-screen bg-white flex justify-center items-center'>
+              <p className='text-2xl font-bold text-gray-900'>Loading...</p>
+            </div>
+          </ClerkLoading>
+          <ClerkLoaded>
+            <Header /> {/* Add the Header component */}
+            <Sidebar /> {/* Add the Sidebar component */}
+            <main className='mt-16 ml-16 p-4 transition-all duration-300'>{children}</main>
+          </ClerkLoaded>
           <Footer /> {/* Add the Footer component */}
         </body>
       </html>

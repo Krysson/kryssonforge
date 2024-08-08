@@ -7,6 +7,9 @@
   - Card View
   - Status View
 - Fixed sidebar links to be LINKS instead of "a"'s for faster internal routing
+- feat: Add svix dependency and implement sign-in and sign-up pages
+  -The commit adds the `svix` dependency to the project, which is required for implementing webhooks. It also adds the `sign-in` and `sign-up` pages with corresponding components from the `@clerk/nextjs` library. These changes enhance the functionality and user experience of the application.
+- feat: added webhooks for clerk that are viewable in clerk - should be viewable in vercel - step toward transfering to MongoDB
 
 ## 08/07/2024
 
