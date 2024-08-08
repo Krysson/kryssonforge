@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import {
@@ -47,61 +48,61 @@ const Sidebar = () => {
         <ul className='space-y-2'>
           {/* Sidebar navigation items */}
           <li>
-            <a
+            <Link
               href='/'
               className='flex items-center p-4 hover:bg-gray-700'>
               <Home className='h-5 w-5' />
               {!isCollapsed && <span className='ml-4'>Home</span>}{' '}
               {/* Display the navigation item label if the sidebar is not collapsed */}
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href='#'
               className='flex items-center p-4 hover:bg-gray-700'>
               <User className='h-5 w-5' />
               {!isCollapsed && <span className='ml-4'>Profile</span>}
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href='/company'
               className='flex items-center p-4 hover:bg-gray-700'>
               <Building className='h-5 w-5' />
               {!isCollapsed && <span className='ml-4'>Company</span>}
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href='/contacts'
               className='flex items-center p-4 hover:bg-gray-700'>
               <ContactRound className='h-5 w-5' />
               {!isCollapsed && <span className='ml-4'>Contacts</span>}
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href='/projects'
               className='flex items-center p-4 hover:bg-gray-700'>
               <FolderGit2 className='h-5 w-5' />
               {!isCollapsed && <span className='ml-4'>Projects</span>}
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href='/tasks'
               className='flex items-center p-4 hover:bg-gray-700'>
               <ListTodo className='h-5 w-5' />
               {!isCollapsed && <span className='ml-4'>Tasks</span>}
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href='/documents'
               className='flex items-center p-4 hover:bg-gray-700'>
               <FileStack className='h-5 w-5' />
               {!isCollapsed && <span className='ml-4'>Documents</span>}
-            </a>
+            </Link>
           </li>
         </ul>
         {/* User authentication area */}
