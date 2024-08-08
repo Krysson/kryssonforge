@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MoreHorizontal, Plus, ListTodo, Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 // Import JSON data
 import tasksData from '/JSON/tasks.json'
@@ -113,6 +115,11 @@ const TasksPage = () => {
           <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
         </div>
       </div>
+      <Link href='/tasks/add'>
+        <Button>
+          <Plus className='mr-2 h-4 w-4' /> Add Task
+        </Button>
+      </Link>
       <div className='flex flex-wrap -mx-2'>
         {statusColumns.map(column => {
           const columnTasks = tasks.filter(task => column.statuses.includes(task.status))

@@ -6,7 +6,7 @@
 - [x] Move user avatar to side bar
 - [x] set up prisma for DB
 - [ ] Set up tasks container on mongodb
-- [ ] New/Add Task Page
+- [x] New/Add Task Page
 - [ ] Edit Task functionality
 - [ ] Delete tasks functionality
 - [x] Task Over view Page
@@ -43,8 +43,9 @@
 - [ ] New/Add Project page
 - [ ] Edit Project page
 - [ ] Delete Project functionality
-- [ ] Project overview page
-- [ ] project search
+- [x] Project overview page
+- [x] project search
+  - [ ] Project search functionality
 
 ---
 
