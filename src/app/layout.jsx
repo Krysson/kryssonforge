@@ -5,8 +5,9 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/footer'
 import Head from 'next/head'
-import Header from '@/components/header'
-import Sidebar from '@/components/sidebar'
+// import Header from '@/components/header'
+// import Sidebar from '@/components/sidebar'
+import HeaderWithSidebar from '@/components/header-with-sidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,8 +27,7 @@ export default function RootLayout({ children }) {
             </div>
           </ClerkLoading>
           <ClerkLoaded>
-            <Header /> {/* Add the Header component */}
-            <Sidebar /> {/* Add the Sidebar component */}
+            <HeaderWithSidebar />
             <main className='mt-16 ml-16 p-4 transition-all duration-300'>{children}</main>
           </ClerkLoaded>
           <Footer /> {/* Add the Footer component */}

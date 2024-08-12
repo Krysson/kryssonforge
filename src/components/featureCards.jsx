@@ -1,7 +1,18 @@
 // src/components/FeatureCardsSection.jsx
 import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { CreditCard, CheckSquare, FileText, Briefcase, MapPin, MessageSquare } from 'lucide-react'
+import {
+  CreditCard,
+  CheckSquare,
+  FileText,
+  Briefcase,
+  MapPin,
+  MessageSquare,
+  BotMessageSquare,
+  CalendarRange,
+  MessagesSquare,
+  Video
+} from 'lucide-react'
 
 const FeatureCard = ({ title, description, Icon }) => (
   <Card className='drop-shadow-xl hover:shadow-2xl transition-shadow duration-300'>
@@ -15,15 +26,30 @@ const FeatureCard = ({ title, description, Icon }) => (
 
 const FeatureCards = () => {
   const features = [
+    {
+      title: 'Ai Enabled',
+      description: 'Bring the Power of Ai to you CRM, Tasks, Projects, Documents & More!',
+      Icon: BotMessageSquare
+    },
     { title: 'CRM', description: 'Manage customer relationships effectively', Icon: CreditCard },
     { title: 'Tasks', description: 'Organize and track your teams tasks', Icon: CheckSquare },
     { title: 'Documents', description: 'Centralize and manage all your documents', Icon: FileText },
     { title: 'Projects', description: 'Plan and execute projects seamlessly', Icon: Briefcase },
     { title: 'Field Ready', description: 'Manage on-site operations efficiently', Icon: MapPin },
     {
-      title: 'Real Time Communication',
-      description: 'Collaborate in real-time with your team',
-      Icon: MessageSquare
+      title: 'Integrated Calendar',
+      description: 'One Calendar to Rule them All',
+      Icon: CalendarRange
+    },
+    {
+      title: 'Real-Time Communication',
+      description: 'Train, Collaborate, and Communicate in Real-Time',
+      Icon: MessagesSquare
+    },
+    {
+      title: 'Video Conferencing',
+      description: 'Collaborate anywhere anytime, in real-time with Anyone',
+      Icon: Video
     }
   ]
 
