@@ -3,27 +3,67 @@
   "users": [
     {
       "id": 1,
-      "name": "Alice Johnson",
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "role": "Employee",
       "email": "alice.j@example.com",
-      "department": "Marketing"
+      "phone": "555-123-4567",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "NY",
+        "zip": "12345"
+      },
+      "projects": [1, 2],
+      "tasks": [1, 4]
     },
     {
-      "id": 2,
-      "name": "Bob Smith",
-      "email": "bob.s@example.com",
-      "department": "Engineering"
+      "id": 1,
+      "firstName": "Steve",
+      "lastName": "Johnson",
+      "role": "Field",
+      "email": "alice.j@example.com",
+      "phone": "555-123-4567",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "NY",
+        "zip": "12345"
+      },
+      "projects": [3, 4],
+      "tasks": [2, 3, 4]
     },
     {
-      "id": 3,
-      "name": "Carol Martinez",
-      "email": "carol.m@example.com",
-      "department": "Human Resources"
+      "id": 1,
+      "firstName": "Mark",
+      "lastName": "Johnson",
+      "role": "ProjectManager",
+      "email": "alice.j@example.com",
+      "phone": "555-123-4567",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "NY",
+        "zip": "12345"
+      },
+      "projects": [4, 5, 6],
+      "tasks": [1, 2, 3, 5, 6]
     },
     {
-      "id": 4,
-      "name": "David Lee",
-      "email": "david.l@example.com",
-      "department": "Finance"
+      "id": 1,
+      "firstName": "Robert",
+      "lastName": "Johnson",
+      "role": "Estimator",
+      "email": "alice.j@example.com",
+      "phone": "555-123-4567",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "NY",
+        "zip": "12345"
+      },
+      "projects": [6],
+      "tasks": [4]
     }
   ]
 }
