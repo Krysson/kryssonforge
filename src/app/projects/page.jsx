@@ -96,10 +96,13 @@ const ProjectColumn = ({ title, projects, count, users }) => (
                         key={user.id}
                         className='w-8 h-8 border-2 border-gray-600 bg-slate-500'>
                         <AvatarFallback>
-                          {user.name
-                            .split(' ')
-                            .map(n => n[0])
-                            .join('')}
+                          {user.firstName && user.lastName
+                            ? `${user.firstName[0]}${user.lastName[0]}`
+                            : user.firstName
+                            ? user.firstName[0]
+                            : user.lastName
+                            ? user.lastName[0]
+                            : 'U'}
                         </AvatarFallback>
                       </Avatar>
                     ))}

@@ -19,8 +19,21 @@ const AddContactForm = () => {
     lastName: '',
     email: '',
     phone: '',
-    role: ''
+    role: '',
+    companyIds: []
   })
+
+  const [companies, setCompanies] = useState([])
+
+  useEffect(() => {
+    // Fetch companies when component mounts
+    const fetchCompanies = async () => {
+      const response = await fetch('/api/companies')
+      const data = await response.json()
+      setCompanies(data)
+    }
+    fetchCompanies()
+  }, [])
 
   const handleChange = (name, value) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -34,11 +47,14 @@ const AddContactForm = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          companyIds: formData.companyIds ? [formData.companyIds] : []
+        })
       })
 
       if (response.ok) {
-        router.push('/contact')
+        router.push('/contacts')
       } else {
         console.error('Failed to add contact')
       }
@@ -57,6 +73,12 @@ const AddContactForm = () => {
         onChange={e => handleChange('firstName', e.target.value)}
         placeholder='First Name'
         required
+      />
+      <Input
+        name='middleName'
+        value={formData.middleName}
+        onChange={e => handleChange('middleName', e.target.value)}
+        placeholder='Middle Name'
       />
       <Input
         name='lastName'
@@ -88,10 +110,27 @@ const AddContactForm = () => {
           <SelectValue placeholder='Select Role' />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value='Field'>Field</SelectItem>
+          <SelectItem value=''>Select Role</SelectItem>
           <SelectItem value='Employee'>Employee</SelectItem>
           <SelectItem value='Project Manager'>Project Manager</SelectItem>
           <SelectItem value='Estimator'>Estimator</SelectItem>
+        </SelectContent>
+      </Select>
+      <Select
+        name='companyIds'
+        value={formData.companyIds}
+        onValueChange={value => handleChange('companyIds', [value])}>
+        <SelectTrigger>
+          <SelectValue placeholder='Select Company' />
+        </SelectTrigger>
+        <SelectContent>
+          {companies.map(company => (
+            <SelectItem
+              key={company.id}
+              value={company.id}>
+              {company.name}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <Button

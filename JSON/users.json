@@ -3,8 +3,8 @@
   "users": [
     {
       "id": 1,
-      "first name": "Alice",
-      "last name": "Johnson",
+      "firstName": "Alice",
+      "lastName": "Johnson",
       "role": "Employee",
       "email": "alice.j@example.com",
       "phone": "555-123-4567",
@@ -19,8 +19,8 @@
     },
     {
       "id": 1,
-      "first name": "Steve",
-      "last name": "Johnson",
+      "firstName": "Steve",
+      "lastName": "Johnson",
       "role": "Field",
       "email": "alice.j@example.com",
       "phone": "555-123-4567",
@@ -35,8 +35,8 @@
     },
     {
       "id": 1,
-      "first name": "Mark",
-      "last name": "Johnson",
+      "firstName": "Mark",
+      "lastName": "Johnson",
       "role": "ProjectManager",
       "email": "alice.j@example.com",
       "phone": "555-123-4567",
@@ -51,8 +51,8 @@
     },
     {
       "id": 1,
-      "first name": "Robert",
-      "last name": "Johnson",
+      "firstName": "Robert",
+      "lastName": "Johnson",
       "role": "Estimator",
       "email": "alice.j@example.com",
       "phone": "555-123-4567",

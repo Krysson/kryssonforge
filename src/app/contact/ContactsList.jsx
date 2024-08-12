@@ -28,7 +28,7 @@ const ContactsList = ({ initialContacts }) => {
   return (
     <>
       <div className='flex justify-between mb-4 items-center'>
-        <Link href='/contact/add'>
+        <Link href='/contacts/add'>
           <Button className='bg-blue-600 text-white'>Add Contact</Button>
         </Link>
         <div className='flex space-x-2 w-2/3'>
@@ -44,33 +44,29 @@ const ContactsList = ({ initialContacts }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>
-              <input type='checkbox' />
-            </TableHead>
             <TableHead>First Name</TableHead>
             <TableHead>Last Name</TableHead>
-            <TableHead>Phone Number</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Projects</TableHead>
+            <TableHead>Phone</TableHead>
             <TableHead>Role</TableHead>
+            <TableHead>Company</TableHead>
+            <TableHead>Projects</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filteredContacts.map(contact => (
             <TableRow key={contact.id}>
-              <TableCell>
-                <input type='checkbox' />
-              </TableCell>
               <TableCell>{contact.firstName}</TableCell>
               <TableCell>{contact.lastName}</TableCell>
-              <TableCell>{contact.phone}</TableCell>
               <TableCell>{contact.email}</TableCell>
-              <TableCell>{contact.projects.map(project => project.name).join(', ')}</TableCell>
+              <TableCell>{contact.phone}</TableCell>
+              <TableCell>{contact.role}</TableCell>
               <TableCell>
-                <span className='bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded'>
-                  {contact.role}
-                </span>
+                {contact.companies?.map(company => company.name).join(', ') || 'N/A'}
+              </TableCell>
+              <TableCell>
+                {contact.projects?.map(project => project.name).join(', ') || 'N/A'}
               </TableCell>
               <TableCell>
                 <Button variant='secondary'>Edit</Button>

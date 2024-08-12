@@ -7,6 +7,7 @@ export async function GET() {
   try {
     const contacts = await prisma.contact.findMany({
       include: {
+        companies: true,
         projects: true
       }
     })

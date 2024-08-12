@@ -6,6 +6,7 @@ export async function fetchContacts() {
   try {
     const contacts = await prisma.contact.findMany({
       include: {
+        companies: true,
         projects: true
       }
     })
@@ -15,7 +16,6 @@ export async function fetchContacts() {
     return []
   }
 }
-
 export async function fetchCompanies() {
   try {
     const companies = await prisma.company.findMany()
