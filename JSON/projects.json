@@ -3,7 +3,7 @@
   "projects": [
     {
       "id": 1,
-      "name": "Market Expansion Initiative",
+      "name": "Market Expansion Init",
       "description": "A strategic project to increase our market share and brand awareness through various marketing campaigns and product launches.",
       "number": "PRJ-2024-001",
       "location": "New York, NY",
@@ -19,7 +19,7 @@
     },
     {
       "id": 2,
-      "name": "Tech Infrastructure Overhaul",
+      "name": "Tech Infra Overhaul",
       "description": "A comprehensive project to upgrade and modernize our entire tech stack, improving performance, security, and scalability.",
       "number": "PRJ-2024-001",
       "location": "New York, NY",
@@ -35,7 +35,7 @@
     },
     {
       "id": 3,
-      "name": "Corporate Restructuring",
+      "name": "Corp Restructuring",
       "description": "A strategic initiative to optimize our organizational structure, improve operational efficiency, and align our workforce with long-term business goals.",
       "number": "PRJ-2024-001",
       "location": "New York, NY",
@@ -51,7 +51,7 @@
     },
     {
       "id": 4,
-      "name": "Office Tower Renovation",
+      "name": "Office Tower Reno",
       "description": "A strategic initiative to optimize our organizational structure, improve operational efficiency, and align our workforce with long-term business goals.",
       "number": "PRJ-2024-001",
       "location": "New York, NY",

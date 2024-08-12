@@ -1,0 +1,62 @@
+{
+  "_comment": "This is a sample JSON file for Company data TESTING.",
+  "companies": [
+    {
+      "id": 1,
+      "name": "ABC Construction Co.",
+      "companyNumber": "CON-2024-001",
+      "address": {
+        "street": "123 Main St.",
+        "street2": "Suite 100",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001"
+      },
+      "mainContact": "Jane Smith",
+      "mainPhone": "212-555-1234",
+      "createdDate": "2024-07-01",
+      "updatedDate": "2024-08-01",
+      "status": "Active",
+      "contactIds": [1, 2, 3],
+      "projectIds": [1, 2, 3, 4]
+    },
+    {
+      "id": 2,
+      "name": "XYZ Builders Inc.",
+      "companyNumber": "CON-2024-002",
+      "address": {
+        "street": "123 Elm St.",
+        "street2": "Suite 300",
+        "city": "Chicago",
+        "state": "IL",
+        "zip": "60610"
+      },
+      "mainContact": "Jack Smith",
+      "mainPhone": "312-555-1234",
+      "createdDate": "2024-07-01",
+      "updatedDate": "2024-08-01",
+      "status": "Active",
+      "contactIds": [4],
+      "projectIds": [5]
+    },
+    {
+      "id": 3,
+      "name": "Homes & More LLC",
+      "companyNumber": "CON-2024-003",
+      "address": {
+        "street": "123 Stack St.",
+        "street2": "Suite 600",
+        "city": "Orlando",
+        "state": "FL",
+        "zip": "32819"
+      },
+      "mainContact": "Steve Smith",
+      "mainPhone": "407-555-1234",
+      "createdDate": "2024-07-01",
+      "updatedDate": "2024-08-01",
+      "status": "Active",
+      "contactIds": [5],
+      "projectIds": [6]
+    }
+  ]
+}

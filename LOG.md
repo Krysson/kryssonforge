@@ -1,5 +1,12 @@
 # Log
 
+## 08/12/2024
+
+- added "Contacts" Page
+- Merged the sidebar and the header
+  - restyled
+- added the JSON for companies & contacts
+
 ## 08/08/2024
 
 - added "Add Task" Page

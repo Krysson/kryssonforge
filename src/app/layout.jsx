@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
           </ClerkLoading>
           <ClerkLoaded>
             <HeaderWithSidebar />
-            <main className='mt-16 ml-16 p-4 transition-all duration-300'>{children}</main>
+            <main className='mt-16 ml-4 p-4 transition-all duration-300'>{children}</main>
           </ClerkLoaded>
           <Footer /> {/* Add the Footer component */}
         </body>

@@ -50,9 +50,9 @@ const HeaderWithSidebar = () => {
 
   const menuItems = [
     { href: '/', icon: Home, label: 'Home' },
-    { href: '#', icon: User, label: 'Profile' },
+    { href: '/about', icon: User, label: 'My Company' },
     { href: '/company', icon: Building, label: 'Company' },
-    { href: '/contacts', icon: ContactRound, label: 'Contacts' },
+    { href: '/contact', icon: ContactRound, label: 'Contacts' },
     { href: '/projects', icon: FolderGit2, label: 'Projects' },
     { href: '/tasks', icon: ListTodo, label: 'Tasks' },
     { href: '/documents', icon: FileStack, label: 'Documents' }

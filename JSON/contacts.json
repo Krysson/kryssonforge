@@ -1,0 +1,65 @@
+{
+  "_comment": "This is a JSON file with a list of Contacts for TESTING purposes.",
+  "contacts": [
+    {
+      "id": 1,
+      "firstName": "Hadley",
+      "middleName": "J.",
+      "lastName": "Smith",
+      "email": "hadley.s@example.com",
+      "phone": "407-555-1234",
+      "role": "Project Manager",
+      "companyIds": [1],
+      "projectsId": [1, 2],
+      "taskIds": [2]
+    },
+    {
+      "id": 2,
+      "firstName": "Jim",
+      "middleName": "",
+      "lastName": "Rudolph",
+      "email": "jim.r@example.com",
+      "phone": "407-555-4321",
+      "role": "Project Manager",
+      "companyIds": [1],
+      "projectsId": [3, 4],
+      "taskIds": [4, 1, 3]
+    },
+    {
+      "id": 3,
+      "firstName": "Ken",
+      "middleName": "",
+      "lastName": "Craig",
+      "email": "ken.c@example.com",
+      "phone": "407-555-5678",
+      "role": "Estimator",
+      "companyIds": [1],
+      "projectsId": [1, 2, 3],
+      "taskIds": []
+    },
+    {
+      "id": 4,
+      "firstName": "Darell",
+      "middleName": "",
+      "lastName": "Jonty",
+      "email": "darell.j@example.com",
+      "phone": "407-555-9876",
+      "role": "Project Manager",
+      "companyIds": [2],
+      "projectsId": [5],
+      "taskIds": [8, 7, 5]
+    },
+    {
+      "id": 5,
+      "firstName": "Julius",
+      "middleName": "B.",
+      "lastName": "Irvin",
+      "email": "julius.i@example.com",
+      "phone": "407-555-9876",
+      "role": "Project Manager",
+      "companyIds": [3],
+      "projectsId": [6],
+      "taskIds": [10, 9, 6]
+    }
+  ]
+}
