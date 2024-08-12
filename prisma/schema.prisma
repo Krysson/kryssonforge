@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +12,95 @@ generator client {
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model Project {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  description          String
+  number               String
+  location             String
+  projectManager       String
+  generalContractor    String
+  contractPrice        String
+  completionPercentage Int
+  startDate            DateTime
+  endDate              DateTime
+  status               String
+  users                User[]   @relation(fields: [userIds], references: [id])
+  userIds              String[] @db.ObjectId
+  tasks                Task[]
+  company              Company  @relation(fields: [companyId], references: [id])
+  companyId            String   @db.ObjectId
+  contacts             Contact[] @relation(fields: [contactIds], references: [id])
+  contactIds           String[] @db.ObjectId
+}
+
+model Task {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  body      String
+  dueDate   DateTime
+  status    String
+  priority  String
+  category  String
+  users     User[]   @relation(fields: [userIds], references: [id])
+  userIds   String[] @db.ObjectId
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String   @db.ObjectId
+  contacts  Contact[] @relation(fields: [contactIds], references: [id])
+  contactIds String[] @db.ObjectId
+}
+
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName  String
+  lastName   String
+  role       String
+  email      String    @unique
+  phone      String
+  address    Address
+  projects   Project[] @relation(fields: [projectIds], references: [id])
+  projectIds String[]  @db.ObjectId
+  tasks      Task[]    @relation(fields: [taskIds], references: [id])
+  taskIds    String[]  @db.ObjectId
+}
+
+model Company {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  companyNumber String
+  address       Address
+  mainContact   String
+  mainPhone     String
+  createdDate   DateTime
+  updatedDate   DateTime
+  status        String
+  contacts      Contact[] @relation(fields: [contactIds], references: [id])
+  contactIds    String[]  @db.ObjectId
+  projects      Project[]
+}
+
+model Contact {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName  String
+  middleName String?
+  lastName   String
+  email      String
+  phone      String
+  role       String
+  companies  Company[] @relation(fields: [companyIds], references: [id])
+  companyIds String[]  @db.ObjectId
+  projects   Project[] @relation(fields: [projectIds], references: [id])
+  projectIds String[]  @db.ObjectId
+  tasks      Task[]    @relation(fields: [taskIds], references: [id])
+  taskIds    String[]  @db.ObjectId
+}
+
+type Address {
+  street  String
+  street2 String?
+  city    String
+  state   String
+  zip     String
 }
