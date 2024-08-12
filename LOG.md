@@ -6,6 +6,10 @@
 - Merged the sidebar and the header
   - restyled
 - added the JSON for companies & contacts
+- added contacts page
+  - added contacts functionality
+- Added companies page
+  - added companies functionality
 
 ## 08/08/2024
 
