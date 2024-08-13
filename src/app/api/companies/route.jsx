@@ -1,3 +1,5 @@
+// Companies API route - app/api/companies/route.jsx
+
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 
@@ -5,9 +7,15 @@ const prisma = new PrismaClient()
 
 export async function GET() {
   try {
-    const companies = await prisma.company.findMany()
+    const companies = await prisma.company.findMany({
+      select: {
+        id: true,
+        name: true
+      }
+    })
     return NextResponse.json(companies)
   } catch (error) {
+    console.error('Failed to fetch companies:', error)
     return NextResponse.json({ error: 'Failed to fetch companies' }, { status: 500 })
   }
 }

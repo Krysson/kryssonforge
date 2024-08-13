@@ -39,15 +39,15 @@ model Project {
 model Task {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
-  body      String
-  dueDate   DateTime
+  body      String?
   status    String
   priority  String
   category  String
+  dueDate   DateTime
+  project   Project?  @relation(fields: [projectId], references: [id])
+  projectId String?   @db.ObjectId
   users     User[]   @relation(fields: [userIds], references: [id])
   userIds   String[] @db.ObjectId
-  project   Project  @relation(fields: [projectId], references: [id])
-  projectId String   @db.ObjectId
   contacts  Contact[] @relation(fields: [contactIds], references: [id])
   contactIds String[] @db.ObjectId
 }

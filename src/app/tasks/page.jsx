@@ -1,143 +1,149 @@
-// Task Page Component
+// tasks/page.jsx - showing all tasks in a table
+'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardHeader, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MoreHorizontal, Plus, ListTodo, Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table'
 import Link from 'next/link'
 
-// Import JSON data
-import tasksData from '/JSON/tasks.json'
-import usersData from '/JSON/users.json'
-import projectsData from '/JSON/projects.json'
+const TasksPage = () => {
+  const [tasks, setTasks] = useState([])
 
-const TaskColumn = ({ title, tasks, count, users, projects }) => (
-  <div className='w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-0.5rem)] p-2'>
-    <Card className='bg-gray-50'>
-      <CardHeader className='flex flex-col items-center justify-center space-y-1 pb-2'>
-        <h3 className='text-2xl font-bold text-center'>{title}</h3>
-        <Badge variant='secondary'>{count}</Badge>
-      </CardHeader>
-      <CardContent>
-        <button className='w-full text-sm text-gray-500 flex items-center justify-center py-2 hover:bg-gray-100 rounded-md'>
-          <Plus className='w-4 h-4 mr-2' /> Add task
-        </button>
-        {tasks.map(task => {
-          const project = projects.find(p => p.taskIds.includes(task.id))
-          const assignedUsers = users.filter(user => task.userIds.includes(user.id))
-          return (
-            <Card
-              key={task.id}
-              className='mt-2 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer'>
-              <CardContent className='p-4'>
-                <div className='flex justify-between items-start'>
-                  <div>
-                    <h4 className='text-sm font-semibold'>{task.title}</h4>
-                    <p className='text-xs text-gray-500 mt-1'>{task.body.substring(0, 60)}...</p>
-                  </div>
-                  <button className='text-gray-400 hover:text-gray-600'>
-                    <MoreHorizontal className='w-4 h-4' />
-                  </button>
-                </div>
-                <div className='flex items-center mt-4'>
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch('/api/tasks')
+        if (response.ok) {
+          const data = await response.json()
+          setTasks(data)
+        } else {
+          console.error('Failed to fetch tasks')
+        }
+      } catch (error) {
+        console.error('Error fetching tasks:', error)
+      }
+    }
+
+    fetchTasks()
+  }, [])
+
+  return (
+    <div className='container mx-auto p-4 pl-10 max-w-full'>
+      <div className='flex justify-between items-center mb-6'>
+        <h1 className='text-2xl font-bold'>Welcome back!</h1>
+        <Link href='/tasks/add'>
+          <Button>
+            <Plus className='mr-2 h-4 w-4' /> Add Task
+          </Button>
+        </Link>
+      </div>
+      <p className='text-gray-500 mb-6'>Here&rsquo;s a list of your tasks for this month!</p>
+
+      <div className='flex justify-between items-center mb-4'>
+        <Input
+          type='text'
+          placeholder='Filter tasks...'
+          className='max-w-sm'
+        />
+        <div className='flex space-x-2'>
+          <Select>
+            <SelectTrigger className='w-[180px]'>
+              <SelectValue placeholder='Status' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='todo'>Todo</SelectItem>
+              <SelectItem value='in-progress'>In Progress</SelectItem>
+              <SelectItem value='done'>Done</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className='w-[180px]'>
+              <SelectValue placeholder='Priority' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='low'>Low</SelectItem>
+              <SelectItem value='medium'>Medium</SelectItem>
+              <SelectItem value='high'>High</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className='w-[180px]'>
+              <SelectValue placeholder='View' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='list'>List</SelectItem>
+              <SelectItem value='board'>Board</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className='w-[50px]'></TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Priority</TableHead>
+            <TableHead className='text-right'></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {tasks.map(task => (
+            <TableRow key={task.id}>
+              <TableCell>
+                <input type='checkbox' />
+              </TableCell>
+              <TableCell>
+                <div>
+                  <p className='font-medium'>{task.title}</p>
                   <Badge
                     variant='outline'
                     className='mr-1 text-xs'>
                     {task.category}
                   </Badge>
-                  <Badge
-                    variant='outline'
-                    className='mr-1 text-xs'>
-                    {task.priority}
-                  </Badge>
-                  {project && (
-                    <Badge
-                      variant='outline'
-                      className='mr-1 text-xs'>
-                      {project.name}
-                    </Badge>
-                  )}
                 </div>
-                <div className='flex justify-between items-center mt-4'>
-                  <div className='flex -space-x-2'>
-                    {assignedUsers.map(user => (
-                      <Avatar
-                        key={user.id}
-                        className='w-8 h-8 border-2 border-gray-600 bg-slate-500'>
-                        <AvatarFallback>
-                          {user.firstName && user.lastName
-                            ? `${user.firstName[0]}${user.lastName[0]}`
-                            : user.firstName
-                            ? user.firstName[0]
-                            : user.lastName
-                            ? user.lastName[0]
-                            : 'U'}
-                        </AvatarFallback>
-                      </Avatar>
-                    ))}
-                  </div>
-                  <div className='flex items-center text-xs text-gray-500'>
-                    <ListTodo className='w-4 h-4 mr-1' />
-                    0/1
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )
-        })}
-      </CardContent>
-    </Card>
-  </div>
-)
-
-const TasksPage = () => {
-  const statusColumns = [
-    { title: 'Not Started', statuses: ['To Do', 'Not Started'] },
-    { title: 'In Progress', statuses: ['In Progress'] },
-    { title: 'Stuck', statuses: ['Stuck', 'Waiting'] },
-    { title: 'Done', statuses: ['Completed', 'Done'] }
-  ]
-
-  const users = usersData.users
-  const projects = projectsData.projects
-  const tasks = tasksData.tasks
-
-  return (
-    <div className='container mx-auto p-4 pl-10 max-w-full'>
-      <div className='flex justify-between items-center mb-6'>
-        <h1 className='text-2xl font-bold mb-6'>Tasks</h1>
-        <div className='relative'>
-          <Input
-            type='text'
-            placeholder='Search tasks...'
-            className='pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-          />
-          <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
-        </div>
-      </div>
-      <Link href='/tasks/add'>
-        <Button>
-          <Plus className='mr-2 h-4 w-4' /> Add Task
-        </Button>
-      </Link>
-      <div className='flex flex-wrap -mx-2'>
-        {statusColumns.map(column => {
-          const columnTasks = tasks.filter(task => column.statuses.includes(task.status))
-          return (
-            <TaskColumn
-              key={column.title}
-              title={column.title}
-              tasks={columnTasks}
-              count={columnTasks.length}
-              users={users}
-              projects={projects}
-            />
-          )
-        })}
-      </div>
+              </TableCell>
+              <TableCell>
+                <Badge variant={task.status === 'Todo' ? 'secondary' : 'primary'}>
+                  {task.status}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <Badge variant={task.priority === 'High' ? 'destructive' : 'outline'}>
+                  {task.priority}
+                </Badge>
+              </TableCell>
+              <TableCell className='text-right'>
+                <Button
+                  variant='ghost'
+                  size='icon'>
+                  <MoreHorizontal className='h-4 w-4' />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   )
 }
