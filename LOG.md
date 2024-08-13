@@ -8,6 +8,8 @@
   - added add projects page
   - added api routes for Users & Projects
   - connected projects to mongo and tested
+- Added Blank Dashboard page
+- added My Company information - hard coded
 
 ## 08/12/2024
 
