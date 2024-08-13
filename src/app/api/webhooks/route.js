@@ -1,5 +1,6 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
+import { createOrUpdateUser, deleteUser } from '@/lib/actions/user'
 
 export async function POST(req) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -40,7 +41,7 @@ export async function POST(req) {
     })
   } catch (err) {
     console.error('Error verifying webhook:', err)
-    return new Response('Error occured', {
+    return new Response('Error occurred', {
       status: 400
     })
   }
