@@ -1,5 +1,9 @@
 # Log
 
+## 08/13/2024
+
+- updated package.json scripts to have "build: " prisma generate && next Build " to try and fix vercel deploy issue
+
 ## 08/12/2024
 
 - added "Contacts" Page
