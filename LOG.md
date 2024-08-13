@@ -4,6 +4,10 @@
 
 - updated package.json scripts to have "build: " prisma generate && next Build " to try and fix vercel deploy issue
 - fixed AddContact issue - works locally
+- added projects listing
+  - added add projects page
+  - added api routes for Users & Projects
+  - connected projects to mongo and tested
 
 ## 08/12/2024
 
