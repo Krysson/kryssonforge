@@ -3,6 +3,7 @@
 ## 08/13/2024
 
 - updated package.json scripts to have "build: " prisma generate && next Build " to try and fix vercel deploy issue
+- fixed AddContact issue - works locally
 
 ## 08/12/2024
 

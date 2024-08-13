@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -28,9 +28,13 @@ const AddContactForm = () => {
   useEffect(() => {
     // Fetch companies when component mounts
     const fetchCompanies = async () => {
-      const response = await fetch('/api/companies')
-      const data = await response.json()
-      setCompanies(data)
+      try {
+        const response = await fetch('/api/companies')
+        const data = await response.json()
+        setCompanies(data)
+      } catch (error) {
+        console.error('Error fetching companies:', error)
+      }
     }
     fetchCompanies()
   }, [])
@@ -49,12 +53,12 @@ const AddContactForm = () => {
         },
         body: JSON.stringify({
           ...formData,
-          companyIds: formData.companyIds ? [formData.companyIds] : []
+          companyIds: formData.companyIds.length ? formData.companyIds : []
         })
       })
 
       if (response.ok) {
-        router.push('/contacts')
+        router.push('/contact')
       } else {
         console.error('Failed to add contact')
       }
@@ -110,7 +114,7 @@ const AddContactForm = () => {
           <SelectValue placeholder='Select Role' />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value=''>Select Role</SelectItem>
+          <SelectItem value='Field'>Field</SelectItem>
           <SelectItem value='Employee'>Employee</SelectItem>
           <SelectItem value='Project Manager'>Project Manager</SelectItem>
           <SelectItem value='Estimator'>Estimator</SelectItem>
@@ -118,7 +122,7 @@ const AddContactForm = () => {
       </Select>
       <Select
         name='companyIds'
-        value={formData.companyIds}
+        value={formData.companyIds[0] || ''}
         onValueChange={value => handleChange('companyIds', [value])}>
         <SelectTrigger>
           <SelectValue placeholder='Select Company' />

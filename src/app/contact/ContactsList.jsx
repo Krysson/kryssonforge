@@ -28,7 +28,7 @@ const ContactsList = ({ initialContacts }) => {
   return (
     <>
       <div className='flex justify-between mb-4 items-center'>
-        <Link href='/contacts/add'>
+        <Link href='/contact/add'>
           <Button className='bg-blue-600 text-white'>Add Contact</Button>
         </Link>
         <div className='flex space-x-2 w-2/3'>
