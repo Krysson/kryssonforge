@@ -1,6 +1,7 @@
+// tasks/add/page.jsx - for adding tasks
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -16,24 +17,49 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { Checkbox } from '@/components/ui/checkbox'
 
-// Import project data for the project selection
-import projectsData from '/JSON/projects.json'
-import usersData from '/JSON/users.json'
-
 const AddTaskPage = () => {
   const router = useRouter()
   const [selectedUsers, setSelectedUsers] = useState([])
+  const [projects, setProjects] = useState([])
+  const [users, setUsers] = useState([])
 
-  const handleSubmit = event => {
+  useEffect(() => {
+    // Fetch projects and users from your API
+    const fetchData = async () => {
+      const projectsResponse = await fetch('/api/projects')
+      const projectsData = await projectsResponse.json()
+      setProjects(projectsData)
+
+      const usersResponse = await fetch('/api/users')
+      const usersData = await usersResponse.json()
+      setUsers(usersData)
+    }
+    fetchData()
+  }, [])
+
+  const handleSubmit = async event => {
     event.preventDefault()
-    // Here you would typically handle the form submission,
-    // such as sending the data to an API
     const formData = new FormData(event.target)
     const taskData = Object.fromEntries(formData.entries())
     taskData.userIds = selectedUsers.map(user => user.id)
-    console.log('Form submitted', taskData)
-    // After submission, navigate back to the tasks page
-    router.push('/tasks')
+
+    try {
+      const response = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(taskData)
+      })
+
+      if (response.ok) {
+        router.push('/tasks')
+      } else {
+        console.error('Failed to add task')
+      }
+    } catch (error) {
+      console.error('Error adding task:', error)
+    }
   }
 
   const handleUserToggle = user => {
@@ -129,7 +155,7 @@ const AddTaskPage = () => {
                   <SelectValue placeholder='Select project' />
                 </SelectTrigger>
                 <SelectContent>
-                  {projectsData.projects.map(project => (
+                  {projects.map(project => (
                     <SelectItem
                       key={project.id}
                       value={project.id.toString()}>
@@ -142,23 +168,22 @@ const AddTaskPage = () => {
             <div className='space-y-2'>
               <Label>Assigned Users</Label>
               <div className='space-y-2 max-h-40 overflow-y-auto p-2 border rounded'>
-                {usersData.users &&
-                  usersData.users.map(user => (
-                    <div
-                      key={user.id}
-                      className='flex items-center space-x-2'>
-                      <Checkbox
-                        id={`user-${user.id}`}
-                        checked={selectedUsers.some(u => u.id === user.id)}
-                        onCheckedChange={() => handleUserToggle(user)}
-                      />
-                      <label
-                        htmlFor={`user-${user.id}`}
-                        className='text-sm'>
-                        {user.name}
-                      </label>
-                    </div>
-                  ))}
+                {users.map(user => (
+                  <div
+                    key={user.id}
+                    className='flex items-center space-x-2'>
+                    <Checkbox
+                      id={`user-${user.id}`}
+                      checked={selectedUsers.some(u => u.id === user.id)}
+                      onCheckedChange={() => handleUserToggle(user)}
+                    />
+                    <label
+                      htmlFor={`user-${user.id}`}
+                      className='text-sm'>
+                      {user.name}
+                    </label>
+                  </div>
+                ))}
               </div>
             </div>
           </CardContent>
