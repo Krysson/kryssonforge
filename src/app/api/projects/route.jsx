@@ -42,8 +42,8 @@ export async function GET() {
         contacts: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true
+            first_name: true,
+            last_name: true
           }
         }
       }

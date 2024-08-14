@@ -2,6 +2,19 @@
 
 ## 08/13/2024
 
+- Implement S3 file management system with Next.js 14 and shadcn/ui
+  - Created API routes for file upload, download, delete, and listing
+  - Implemented file upload page with automatic redirection and toast notifications
+  - Developed file listing page with sorting, download, and delete functionalities
+  - Added loading state with skeleton loaders to file listing page
+  - Integrated shadcn/ui components for improved UI/UX
+  - Implemented navigation between upload and file listing pages
+  - Added error handling and success messages using toast notifications
+  - Optimized file size display and date formatting
+  - Ensured responsive design for better user experience across devices
+
+## 08/13/2024
+
 - updated package.json scripts to have "build: " prisma generate && next Build " to try and fix vercel deploy issue
 - fixed AddContact issue - works locally
 - added projects listing

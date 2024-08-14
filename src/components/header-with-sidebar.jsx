@@ -1,8 +1,8 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import {
   Menu,
   ChevronLeft,
@@ -16,37 +16,37 @@ import {
   LogIn,
   UserPlus,
   User
-} from 'lucide-react'
+} from 'lucide-react';
 
 const HeaderWithSidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(true)
-  const sidebarRef = useRef(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const sidebarRef = useRef(null);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
+    setIsSidebarOpen(!isSidebarOpen);
     if (isCollapsed) {
-      setIsCollapsed(false)
+      setIsCollapsed(false);
     }
-  }
+  };
 
   const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed)
-  }
+    setIsCollapsed(!isCollapsed);
+  };
 
   useEffect(() => {
     const handleClickOutside = event => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setIsSidebarOpen(false)
-        setIsCollapsed(true)
+        setIsSidebarOpen(false);
+        setIsCollapsed(true);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const menuItems = [
     { href: '/', icon: Home, label: 'Home' },
@@ -55,8 +55,8 @@ const HeaderWithSidebar = () => {
     { href: '/contact', icon: ContactRound, label: 'Contacts' },
     { href: '/projects', icon: FolderGit2, label: 'Projects' },
     { href: '/tasks', icon: ListTodo, label: 'Tasks' },
-    { href: '/documents', icon: FileStack, label: 'Documents' }
-  ]
+    { href: '/files', icon: FileStack, label: 'Documents' }
+  ];
 
   return (
     <>
@@ -152,7 +152,7 @@ const HeaderWithSidebar = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default HeaderWithSidebar
+export default HeaderWithSidebar;
