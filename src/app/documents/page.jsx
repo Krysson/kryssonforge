@@ -1,28 +1,28 @@
-import { getFile } from '../../../lib/s3'
+// import { getFile } from '../../../lib/s3'
 
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export async function GET(request) {
-  const { projectId } = request.query
+  const { projectId } = request.query;
 
   const files = await prisma.file.findMany({
     where: { projectId },
     orderBy: { uploadedAt: 'desc' }
-  })
+  });
 
-  return NextResponse.json({ files })
+  return NextResponse.json({ files });
 }
 
 export default function ProjectFiles({ projectId }) {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState([]);
 
   useEffect(() => {
     fetch(`/api/files?projectId=${projectId}`)
       .then(res => res.json())
-      .then(data => setFiles(data.files))
-  }, [projectId])
+      .then(data => setFiles(data.files));
+  }, [projectId]);
 
   return (
     <div>
@@ -43,5 +43,5 @@ export default function ProjectFiles({ projectId }) {
         ))}
       </ul>
     </div>
-  )
+  );
 }
