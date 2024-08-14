@@ -1,6 +1,8 @@
 # Log
 
-## 08/13/2024
+## 08/14/2024
+
+https://dhtmlx.com/blog/create-react-gantt-chart-component-dhtmlxgantt/
 
 - Implement S3 file management system with Next.js 14 and shadcn/ui
   - Created API routes for file upload, download, delete, and listing
