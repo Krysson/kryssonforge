@@ -1,33 +1,38 @@
-import { NextResponse } from 'next/server'
-import { uploadFile } from '../../../lib/s3'
-import { PrismaClient } from '@prisma/client'
+import { NextResponse } from 'next/server';
+import { File, FormData } from '@web-std/file';
+import { S3 } from 'aws-sdk';
+import { randomUUID } from 'crypto';
 
-const prisma = new PrismaClient()
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
 
 export async function POST(request) {
-  const formData = await request.formData()
-  const file = formData.get('file')
-  const projectId = formData.get('projectId') // Assuming projectId is provided
-  const key = `${projectId}/${file.name}`
-
   try {
-    // Upload file to S3
-    const result = await uploadFile(file, key)
+    const formData = await request.formData();
+    const file = formData.get('file');
 
-    // Store file metadata in MongoDB
-    await prisma.file.create({
-      data: {
-        filename: file.name,
-        projectId: projectId,
-        s3Url: result.Location,
-        fileType: file.type,
-        description: formData.get('description') || '' // Optional metadata
-      }
-    })
+    if (!file) {
+      return NextResponse.json({ success: false, error: 'No file uploaded' }, { status: 400 });
+    }
 
-    return NextResponse.json({ url: result.Location }, { status: 200 })
+    const buffer = await file.arrayBuffer();
+    const fileName = `${randomUUID()}-${file.name}`;
+
+    const params = {
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: fileName,
+      Body: Buffer.from(buffer),
+      ContentType: file.type
+    };
+
+    const data = await s3.upload(params).promise();
+
+    return NextResponse.json({ success: true, url: data.Location });
   } catch (error) {
-    console.error('File upload error:', error)
-    return NextResponse.json({ error: 'File upload failed' }, { status: 500 })
+    console.error('Error uploading file:', error);
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

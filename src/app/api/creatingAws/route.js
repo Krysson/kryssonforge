@@ -1,33 +1,22 @@
-import s3 from 'aws-sdk/clients/s3';
-import axios from 'axios';
-import { Content } from 'next/font/google';
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
 
-export default async function aws(file) {
-  const s3 = new s3({
-    region: process.env.AWS_REGION,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    signatureVersion: 'v4'
-  });
+async function uploadToS3(file) {
+  const params = {
+    Bucket: 'kf.doc.bucket', // Replace with your actual bucket name
+    Key: file.name, // The name of the file to be saved in S3
+    Body: file.data, // The file data
+    ContentType: file.type // The MIME type of the file
+  };
 
   try {
-    const fileParams = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      key: file.name,
-      Expires: 600,
-      ContentType: file.type
-    };
-
-    return 'Uploaded!';
-  } catch (error) {
-    return error;
+    const data = await s3.upload(params).promise();
+    console.log(`File uploaded successfully at ${data.Location}`);
+    return data.Location;
+  } catch (err) {
+    console.error('Error uploading file:', err);
+    throw err;
   }
 }
 
-const url = await s3.getSignedUrlPromise('putObject', fileParams);
-
-await axios.put(url, file, {
-  headers: {
-    'Content-Type': file.type
-  }
-});
+module.exports = uploadToS3;
