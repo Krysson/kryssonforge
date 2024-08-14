@@ -17,8 +17,8 @@ export const createOrUpdateUser = async (
       { clerkId: id },
       {
         $set: {
-          firstName: first_name,
-          lastName: last_name,
+          first_name: first_name,
+          last_name: last_name,
           avatar: image_url,
           email: email_addresses[0].email,
           username: username

@@ -2,36 +2,18 @@ import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema(
   {
-    clerkId: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    email: {
-      type: String,
-      required: true
-    },
-    firstName: {
-      type: String,
-      required: true
-    },
-    lastName: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    avatar: {
-      type: String,
-      required: true
-    }
+    clerkId: { type: String, required: true, unique: true },
+    first_name: { type: String },
+    last_name: { type: String },
+    avatar: { type: String },
+    email: { type: String },
+    username: { type: String, unique: true }
+    // Add other fields here as per your Prisma schema
   },
-  { timestamps: true }
+  {
+    collection: 'User' // Ensures this schema uses the "User" collection
+  }
 )
 
-const User = mongoose.models.User || mongoose.model('User', userSchema)
-
+const User = mongoose.model('User', userSchema)
 export default User
