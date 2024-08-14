@@ -27,6 +27,7 @@ model Project {
   startDate            DateTime
   endDate              DateTime
   status               String
+  files      File[]   // Relation to the File model
   users                User[]   @relation(fields: [userIds], references: [id])
   userIds              String[] @db.ObjectId
   tasks                Task[]
@@ -97,6 +98,18 @@ model Contact {
   tasks      Task[]    @relation(fields: [taskIds], references: [id])
   taskIds    String[]  @db.ObjectId
 }
+
+model File {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  filename    String
+  projectId   String   // Foreign key to the project
+  s3Url       String
+  fileType    String   // E.g., "application/pdf", "image/jpeg"
+  uploadedAt  DateTime @default(now())
+  description String?  // Optional, to store any additional metadata
+  project     Project  @relation(fields: [projectId], references: [id])
+}
+
 
 type Address {
   street  String

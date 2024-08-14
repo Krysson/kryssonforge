@@ -1,0 +1,11 @@
+{
+  "Version": "08-14-2024",
+  "Statement": [
+    {
+      "Sid": "Statement1",
+      "Principal": { "AWS": "arn:aws:iam::025066253407:user/NextAccess" },
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+    }
+  ]
+}
