@@ -23,8 +23,8 @@ export async function GET() {
         users: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true
+            first_name: true,
+            last_name: true
           }
         },
         tasks: {
