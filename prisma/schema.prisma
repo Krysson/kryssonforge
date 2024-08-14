@@ -54,12 +54,13 @@ model Task {
 
 model User {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstName  String
-  lastName   String
-  role       String
-  email      String    @unique
-  phone      String
-  address    Address
+  first_name  String
+  last_name   String
+  username  String? 
+  role       String?
+  email_address      String    @unique  @db.ObjectId
+  phone_number      String?
+  address    Address?
   projects   Project[] @relation(fields: [projectIds], references: [id])
   projectIds String[]  @db.ObjectId
   tasks      Task[]    @relation(fields: [taskIds], references: [id])

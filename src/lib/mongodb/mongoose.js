@@ -12,7 +12,7 @@ export const connect = async () => {
 
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: 'KryssonForge',
+      dbName: 'kryssonforge',
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
