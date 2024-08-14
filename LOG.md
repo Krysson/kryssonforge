@@ -2,6 +2,8 @@
 
 ## 08/14/2024
 
+this is just to check the functionality of git lens
+
 https://dhtmlx.com/blog/create-react-gantt-chart-component-dhtmlxgantt/
 
 - Implement S3 file management system with Next.js 14 and shadcn/ui
