@@ -1,49 +1,45 @@
-// Companies API route - app/api/companies/route.jsx
+// src/app/api/companies/route.js
+import { NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
 
-import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export async function GET() {
   try {
     const companies = await prisma.company.findMany({
-      select: {
-        id: true,
-        name: true
+      include: {
+        mainContact: true,
+        contacts: true,
+        projects: true,
+        users: true
       }
-    })
-    return NextResponse.json(companies)
+    });
+    return NextResponse.json(companies);
   } catch (error) {
-    console.error('Failed to fetch companies:', error)
-    return NextResponse.json({ error: 'Failed to fetch companies' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to fetch companies' }, { status: 500 });
   }
 }
 
 export async function POST(request) {
   try {
-    const data = await request.json()
-
-    // Ensure the address is in the correct format
-    const { address, ...rest } = data
-
+    const data = await request.json();
     const company = await prisma.company.create({
       data: {
-        ...rest,
-        address: {
-          street: address.street,
-          street2: address.street2 || null, // Make sure to handle optional fields
-          city: address.city,
-          state: address.state,
-          zip: address.zip
-        },
-        contactIds: [] // Initialize with an empty array if no contacts are provided
+        ...data,
+        mainContact: { connect: { id: data.mainContactId } },
+        contacts: { connect: data.contactIDs.map(id => ({ id })) },
+        users: { connect: data.userIDs.map(id => ({ id })) }
+      },
+      include: {
+        mainContact: true,
+        contacts: true,
+        projects: true,
+        users: true
       }
-    })
-
-    return NextResponse.json(company, { status: 201 })
+    });
+    return NextResponse.json(company, { status: 201 });
   } catch (error) {
-    console.error('Error creating company:', error)
-    return NextResponse.json({ error: 'Failed to create company' }, { status: 500 })
+    console.error('Failed to create company:', error);
+    return NextResponse.json({ error: 'Failed to create company' }, { status: 500 });
   }
 }
