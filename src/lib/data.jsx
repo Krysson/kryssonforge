@@ -1,4 +1,4 @@
-// lib/data.jsx
+// src/lib/data.jsx
 import { prisma } from './prismaClient';
 
 export async function fetchContacts() {
