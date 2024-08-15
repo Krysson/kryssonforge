@@ -26,10 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dhtmlx-gantt": "^8.0.9",
-<<<<<<< HEAD
     "dotenv": "^16.4.5",
-=======
->>>>>>> a324ae37901a733888935ced7e533ee7667c3755
     "formidable": "^3.5.1",
     "lucide-react": "^0.424.0",
     "mongodb": "^6.8.0",
