@@ -1,10 +1,9 @@
 // lib/data.jsx
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from './prismaClient';
 
 export async function fetchContacts() {
   try {
+    console.log('Attempting to fetch contacts...');
     const contacts = await prisma.contact.findMany({
       include: {
         company: true,
@@ -13,9 +12,13 @@ export async function fetchContacts() {
         mainContactFor: true
       }
     });
+    console.log('Contacts fetched successfully:', contacts.length);
     return contacts;
   } catch (error) {
-    console.error('Failed to fetch contacts:', error);
+    console.error('Failed to fetch contacts. Error details:', error);
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
     throw new Error('Failed to fetch contacts');
   }
 }
