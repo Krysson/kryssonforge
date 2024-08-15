@@ -14,6 +14,7 @@ import {
   ListTodo,
   FileStack,
   LogIn,
+  SquareChartGantt,
   UserPlus,
   User
 } from 'lucide-react';
@@ -54,6 +55,7 @@ const HeaderWithSidebar = () => {
     { href: '/company', icon: Building, label: 'Company' },
     { href: '/contact', icon: ContactRound, label: 'Contacts' },
     { href: '/projects', icon: FolderGit2, label: 'Projects' },
+    { href: '/schedule', icon: SquareChartGantt, label: 'Project Schedule' },
     { href: '/tasks', icon: ListTodo, label: 'Tasks' },
     { href: '/files', icon: FileStack, label: 'Documents' }
   ];
