@@ -1,6 +1,7 @@
-import User from '../models/user.model'
+// @/lib/actions/user.js
+import { PrismaClient } from '@prisma/client';
 
-import { connect } from '../mongodb/mongoose'
+const prisma = new PrismaClient();
 
 export const createOrUpdateUser = async (
   id,
@@ -11,34 +12,37 @@ export const createOrUpdateUser = async (
   username
 ) => {
   try {
-    await connect()
-
-    const user = await User.findOneAndUpdate(
-      { clerkId: id },
-      {
-        $set: {
-          first_name: first_name,
-          last_name: last_name,
-          avatar: image_url,
-          email: email_addresses[0].email,
-          username: username
-        }
+    const user = await prisma.user.upsert({
+      where: { clerkId: id },
+      update: {
+        firstName: first_name,
+        lastName: last_name,
+        imageUrl: image_url,
+        emailAddress: email_addresses[0].email_address,
+        username: username
       },
-      { new: true, upsert: true }
-    )
+      create: {
+        clerkId: id,
+        firstName: first_name,
+        lastName: last_name,
+        imageUrl: image_url,
+        emailAddress: email_addresses[0].email_address,
+        username: username
+      }
+    });
 
-    return user
+    return user;
   } catch (error) {
-    console.log('Error creating or updating user:', error)
+    console.log('Error creating or updating user:', error);
+    throw error;
   }
-}
+};
 
 export const deleteUser = async id => {
   try {
-    await connect()
-
-    await User.findOneAndDelete({ clerkId: id })
+    await prisma.user.delete({ where: { clerkId: id } });
   } catch (error) {
-    console.log('Error deleting user:', error)
+    console.log('Error deleting user:', error);
+    throw error;
   }
-}
+};
