@@ -1,10 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -20,21 +16,22 @@ model Project {
   description          String
   number               String
   location             String
-  projectManager       String
+  projectManagerId     String   @db.ObjectId
+  projectManager       User     @relation("ProjectManager", fields: [projectManagerId], references: [id])
   generalContractor    String
   contractPrice        String
   completionPercentage Int
   startDate            DateTime
   endDate              DateTime
   status               String
-  files      File[]   // Relation to the File model
-  users                User[]   @relation(fields: [userIds], references: [id])
-  userIds              String[] @db.ObjectId
+  files                File[]
+  userIDs              String[] @db.ObjectId
+  users                User[]   @relation("UserProjects", fields: [userIDs], references: [id])
   tasks                Task[]
-  company              Company  @relation(fields: [companyId], references: [id])
   companyId            String   @db.ObjectId
-  contacts             Contact[] @relation(fields: [contactIds], references: [id])
-  contactIds           String[] @db.ObjectId
+  company              Company  @relation(fields: [companyId], references: [id])
+  contactIDs           String[] @db.ObjectId
+  contacts             Contact[] @relation("ProjectContacts", fields: [contactIDs], references: [id])
 }
 
 model Task {
@@ -45,27 +42,29 @@ model Task {
   priority  String
   category  String
   dueDate   DateTime
-  project   Project?  @relation(fields: [projectId], references: [id])
-  projectId String?   @db.ObjectId
-  users     User[]   @relation(fields: [userIds], references: [id])
-  userIds   String[] @db.ObjectId
-  contacts  Contact[] @relation(fields: [contactIds], references: [id])
-  contactIds String[] @db.ObjectId
+  projectId String?  @db.ObjectId
+  project   Project? @relation(fields: [projectId], references: [id])
+  userIDs   String[] @db.ObjectId
+  users     User[]   @relation("UserTasks", fields: [userIDs], references: [id])
+  contactIDs String[] @db.ObjectId
+  contacts  Contact[] @relation("TaskContacts", fields: [contactIDs], references: [id])
 }
 
 model User {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  first_name  String
-  last_name   String
-  username  String? 
-  role       String?
-  email_address      String    @unique  @db.ObjectId
-  phone_number      String?
-  address    Address?
-  projects   Project[] @relation(fields: [projectIds], references: [id])
-  projectIds String[]  @db.ObjectId
-  tasks      Task[]    @relation(fields: [taskIds], references: [id])
-  taskIds    String[]  @db.ObjectId
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId         String    @unique
+  firstName       String
+  lastName        String
+  username        String?
+  emailAddress    String    @unique
+  imageUrl        String?
+  projectIDs      String[]  @db.ObjectId
+  projects        Project[] @relation("UserProjects", fields: [projectIDs], references: [id])
+  taskIDs         String[]  @db.ObjectId
+  tasks           Task[]    @relation("UserTasks", fields: [taskIDs], references: [id])
+  companyIDs      String[]  @db.ObjectId
+  companies       Company[] @relation("UserCompanies", fields: [companyIDs], references: [id])
+  managedProjects Project[] @relation("ProjectManager")
 }
 
 model Company {
@@ -73,43 +72,44 @@ model Company {
   name          String
   companyNumber String
   address       Address
-  mainContact   String
+  mainContactId String    @db.ObjectId @unique
+  mainContact   Contact   @relation("MainContact", fields: [mainContactId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   mainPhone     String
   createdDate   DateTime
   updatedDate   DateTime
   status        String
-  contacts      Contact[] @relation(fields: [contactIds], references: [id])
-  contactIds    String[]  @db.ObjectId
+  contacts      Contact[] @relation("CompanyContacts")
   projects      Project[]
+  userIDs       String[]  @db.ObjectId
+  users         User[]    @relation("UserCompanies", fields: [userIDs], references: [id])
 }
 
 model Contact {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  first_name  String
-  
-  last_name   String
-  email      String
-  phone      String
-  role       String
-  companies  Company[] @relation(fields: [companyIds], references: [id])
-  companyIds String[]  @db.ObjectId
-  projects   Project[] @relation(fields: [projectIds], references: [id])
-  projectIds String[]  @db.ObjectId
-  tasks      Task[]    @relation(fields: [taskIds], references: [id])
-  taskIds    String[]  @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  email          String
+  phone          String
+  role           String
+  companyId      String    @db.ObjectId
+  company        Company   @relation("CompanyContacts", fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  projectIDs     String[]  @db.ObjectId
+  projects       Project[] @relation("ProjectContacts", fields: [projectIDs], references: [id])
+  taskIDs        String[]  @db.ObjectId
+  tasks          Task[]    @relation("TaskContacts", fields: [taskIDs], references: [id])
+  mainContactFor Company?  @relation("MainContact")
 }
 
 model File {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   filename    String
-  projectId   String   // Foreign key to the project
+  projectId   String   @db.ObjectId
   s3Url       String
-  fileType    String   // E.g., "application/pdf", "image/jpeg"
+  fileType    String
   uploadedAt  DateTime @default(now())
-  description String?  // Optional, to store any additional metadata
+  description String?
   project     Project  @relation(fields: [projectId], references: [id])
 }
-
 
 type Address {
   street  String

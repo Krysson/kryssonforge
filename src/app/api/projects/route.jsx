@@ -1,93 +1,86 @@
-// app/api/projects/route.js
-import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+// src/app/api/projects/route.js
+import { NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        number: true,
-        location: true,
+      include: {
         projectManager: true,
-        generalContractor: true,
-        contractPrice: true,
-        completionPercentage: true,
-        startDate: true,
-        endDate: true,
-        status: true,
-        users: {
-          select: {
-            id: true,
-            first_name: true,
-            last_name: true
-          }
-        },
-        tasks: {
-          select: {
-            id: true,
-            title: true
-          }
-        },
-        company: {
-          select: {
-            id: true,
-            name: true
-          }
-        },
-        contacts: {
-          select: {
-            id: true,
-            first_name: true,
-            last_name: true
-          }
-        }
+        users: true,
+        tasks: true,
+        company: true,
+        contacts: true,
+        files: true
       }
-    })
-    return NextResponse.json(projects)
+    });
+    return NextResponse.json(projects);
   } catch (error) {
-    console.error('Failed to fetch projects:', error)
-    return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
   }
 }
-// POST Function
 
 export async function POST(request) {
   try {
-    const data = await request.json()
-
-    if (!data.companyId) {
-      return NextResponse.json({ error: 'Company ID is required' }, { status: 400 })
-    }
-
+    const data = await request.json();
     const project = await prisma.project.create({
       data: {
-        name: data.name,
-        description: data.description,
-        number: data.number,
-        location: data.location,
-        projectManager: data.projectManager,
-        generalContractor: data.generalContractor,
-        contractPrice: data.contractPrice,
-        completionPercentage: data.completionPercentage,
-        startDate: new Date(data.startDate),
-        endDate: new Date(data.endDate),
-        status: data.status,
+        ...data,
+        projectManager: { connect: { id: data.projectManagerId } },
         company: { connect: { id: data.companyId } },
-        users: { connect: data.userIds ? data.userIds.map(id => ({ id })) : [] },
-        contacts: { connect: data.contactIds ? data.contactIds.map(id => ({ id })) : [] }
+        users: { connect: data.userIDs.map(id => ({ id })) },
+        contacts: { connect: data.contactIDs.map(id => ({ id })) }
+      },
+      include: {
+        projectManager: true,
+        users: true,
+        tasks: true,
+        company: true,
+        contacts: true,
+        files: true
       }
-    })
-    return NextResponse.json(project, { status: 201 })
+    });
+    return NextResponse.json(project, { status: 201 });
   } catch (error) {
-    console.error('Failed to create project:', error)
-    return NextResponse.json(
-      { error: 'Failed to create project', details: error.message },
-      { status: 500 }
-    )
+    console.error('Failed to create project:', error);
+    return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });
+  }
+}
+export async function PUT(request) {
+  try {
+    const { id, ...data } = await request.json();
+    const updatedProject = await prisma.project.update({
+      where: { id },
+      data: {
+        ...data,
+        users: { set: data.userIDs.map(id => ({ id })) },
+        contacts: { set: data.contactIDs.map(id => ({ id })) }
+      },
+      include: {
+        projectManager: true,
+        users: true,
+        tasks: true,
+        company: true,
+        contacts: true,
+        files: true
+      }
+    });
+    return NextResponse.json(updatedProject);
+  } catch (error) {
+    console.error('Failed to update project:', error);
+    return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request) {
+  try {
+    const { id } = await request.json();
+    await prisma.project.delete({ where: { id } });
+    return NextResponse.json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    console.error('Failed to delete project:', error);
+    return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
   }
 }

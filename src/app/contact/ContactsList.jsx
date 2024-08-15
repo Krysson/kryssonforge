@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -10,12 +10,12 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/ui/table'
-import Link from 'next/link'
+} from '@/components/ui/table';
+import Link from 'next/link';
 
 const ContactsList = ({ initialContacts }) => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [contacts, setContacts] = useState(initialContacts)
+  const [searchTerm, setSearchTerm] = useState('');
+  const [contacts, setContacts] = useState(initialContacts);
 
   // Filter contacts based on search term
   const filteredContacts = contacts.filter(
@@ -23,7 +23,7 @@ const ContactsList = ({ initialContacts }) => {
       contact.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.email.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
 
   return (
     <>
@@ -62,9 +62,7 @@ const ContactsList = ({ initialContacts }) => {
               <TableCell>{contact.email}</TableCell>
               <TableCell>{contact.phone}</TableCell>
               <TableCell>{contact.role}</TableCell>
-              <TableCell>
-                {contact.companies?.map(company => company.name).join(', ') || 'N/A'}
-              </TableCell>
+              <TableCell>{contact.company?.name || 'N/A'}</TableCell>
               <TableCell>
                 {contact.projects?.map(project => project.name).join(', ') || 'N/A'}
               </TableCell>
@@ -77,7 +75,7 @@ const ContactsList = ({ initialContacts }) => {
         </TableBody>
       </Table>
     </>
-  )
-}
+  );
+};
 
-export default ContactsList
+export default ContactsList;
