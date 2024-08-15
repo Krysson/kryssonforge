@@ -1,6 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+
+// Simplified schema.prisma without any relations
 generator client {
   provider = "prisma-client-js"
 }
@@ -16,22 +18,12 @@ model Project {
   description          String
   number               String
   location             String
-  projectManagerId     String   @db.ObjectId
-  projectManager       User     @relation("ProjectManager", fields: [projectManagerId], references: [id])
   generalContractor    String
   contractPrice        String
   completionPercentage Int
   startDate            DateTime
   endDate              DateTime
   status               String
-  files                File[]
-  userIDs              String[] @db.ObjectId
-  users                User[]   @relation("UserProjects", fields: [userIDs], references: [id])
-  tasks                Task[]
-  companyId            String   @db.ObjectId
-  company              Company  @relation(fields: [companyId], references: [id])
-  contactIDs           String[] @db.ObjectId
-  contacts             Contact[] @relation("ProjectContacts", fields: [contactIDs], references: [id])
 }
 
 model Task {
@@ -42,73 +34,45 @@ model Task {
   priority  String
   category  String
   dueDate   DateTime
-  projectId String?  @db.ObjectId
-  project   Project? @relation(fields: [projectId], references: [id])
-  userIDs   String[] @db.ObjectId
-  users     User[]   @relation("UserTasks", fields: [userIDs], references: [id])
-  contactIDs String[] @db.ObjectId
-  contacts  Contact[] @relation("TaskContacts", fields: [contactIDs], references: [id])
 }
 
 model User {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId         String    @unique
-  firstName       String
-  lastName        String
-  username        String?
-  emailAddress    String    @unique
-  imageUrl        String?
-  projectIDs      String[]  @db.ObjectId
-  projects        Project[] @relation("UserProjects", fields: [projectIDs], references: [id])
-  taskIDs         String[]  @db.ObjectId
-  tasks           Task[]    @relation("UserTasks", fields: [taskIDs], references: [id])
-  companyIDs      String[]  @db.ObjectId
-  companies       Company[] @relation("UserCompanies", fields: [companyIDs], references: [id])
-  managedProjects Project[] @relation("ProjectManager")
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId      String  @unique
+  firstName    String
+  lastName     String
+  username     String?
+  emailAddress String  @unique
+  imageUrl     String?
 }
 
 model Company {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   companyNumber String
   address       Address
-  mainContactId String    @db.ObjectId @unique
-  mainContact   Contact   @relation("MainContact", fields: [mainContactId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   mainPhone     String
   createdDate   DateTime
   updatedDate   DateTime
   status        String
-  contacts      Contact[] @relation("CompanyContacts")
-  projects      Project[]
-  userIDs       String[]  @db.ObjectId
-  users         User[]    @relation("UserCompanies", fields: [userIDs], references: [id])
 }
 
 model Contact {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstName      String
-  lastName       String
-  email          String
-  phone          String
-  role           String
-  companyId      String    @db.ObjectId
-  company        Company   @relation("CompanyContacts", fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  projectIDs     String[]  @db.ObjectId
-  projects       Project[] @relation("ProjectContacts", fields: [projectIDs], references: [id])
-  taskIDs        String[]  @db.ObjectId
-  tasks          Task[]    @relation("TaskContacts", fields: [taskIDs], references: [id])
-  mainContactFor Company?  @relation("MainContact")
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  role      String
 }
 
 model File {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   filename    String
-  projectId   String   @db.ObjectId
   s3Url       String
   fileType    String
   uploadedAt  DateTime @default(now())
   description String?
-  project     Project  @relation(fields: [projectId], references: [id])
 }
 
 type Address {

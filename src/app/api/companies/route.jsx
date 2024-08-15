@@ -23,13 +23,30 @@ export async function GET() {
 export async function POST(request) {
   try {
     const data = await request.json();
+    const companyData = {
+      name: data.name,
+      companyNumber: data.companyNumber,
+      mainPhone: data.mainPhone,
+      status: data.status,
+      address: data.address,
+      createdDate: new Date(data.createdDate),
+      updatedDate: new Date(data.updatedDate)
+    };
+
+    if (data.mainContactId) {
+      companyData.mainContact = { connect: { id: data.mainContactId } };
+    }
+
+    if (data.contactIDs && data.contactIDs.length > 0) {
+      companyData.contacts = { connect: data.contactIDs.map(id => ({ id })) };
+    }
+
+    if (data.userIDs && data.userIDs.length > 0) {
+      companyData.users = { connect: data.userIDs.map(id => ({ id })) };
+    }
+
     const company = await prisma.company.create({
-      data: {
-        ...data,
-        mainContact: { connect: { id: data.mainContactId } },
-        contacts: { connect: data.contactIDs.map(id => ({ id })) },
-        users: { connect: data.userIDs.map(id => ({ id })) }
-      },
+      data: companyData,
       include: {
         mainContact: true,
         contacts: true,
@@ -40,6 +57,9 @@ export async function POST(request) {
     return NextResponse.json(company, { status: 201 });
   } catch (error) {
     console.error('Failed to create company:', error);
-    return NextResponse.json({ error: 'Failed to create company' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to create company', details: error.message },
+      { status: 500 }
+    );
   }
 }

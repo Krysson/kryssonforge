@@ -1,23 +1,23 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/select'
+} from '@/components/ui/select';
 
 const AddCompanyForm = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     companyNumber: '',
-    mainContact: '',
+    mainContactId: '', // Change this to mainContactId
     mainPhone: '',
     status: '',
     address: {
@@ -26,15 +26,17 @@ const AddCompanyForm = () => {
       city: '',
       state: '',
       zip: ''
-    }
-  })
+    },
+    contactIDs: [], // Add this
+    userIDs: [] // Add this
+  });
 
   const handleChange = (name, value) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
-    }))
-  }
+    }));
+  };
 
   const handleAddressChange = (field, value) => {
     setFormData(prev => ({
@@ -43,17 +45,17 @@ const AddCompanyForm = () => {
         ...prev.address,
         [field]: value
       }
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async e => {
-    e.preventDefault()
+    e.preventDefault();
     const dataToSend = {
       ...formData,
-      createdDate: new Date().toISOString(), // Convert to ISO string for proper date formatting
+      createdDate: new Date().toISOString(),
       updatedDate: new Date().toISOString()
-    }
-    console.log('Data being sent:', dataToSend)
+    };
+    console.log('Data being sent:', dataToSend);
 
     try {
       const response = await fetch('/api/companies', {
@@ -61,24 +63,20 @@ const AddCompanyForm = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          ...formData,
-          createdDate: new Date(),
-          updatedDate: new Date()
-        })
-      })
+        body: JSON.stringify(dataToSend)
+      });
 
       if (response.ok) {
-        console.log('Company added successfully')
-        router.push('/company')
+        console.log('Company added successfully');
+        router.push('/company');
       } else {
-        const errorData = await response.json()
-        console.error('Failed to add company:', errorData)
+        const errorData = await response.json();
+        console.error('Failed to add company:', errorData);
       }
     } catch (error) {
-      console.error('Error adding company:', error)
+      console.error('Error adding company:', error);
     }
-  }
+  };
 
   return (
     <form
@@ -99,10 +97,10 @@ const AddCompanyForm = () => {
         required
       />
       <Input
-        name='mainContact'
-        value={formData.mainContact}
-        onChange={e => handleChange('mainContact', e.target.value)}
-        placeholder='Main Contact'
+        name='mainContactId'
+        value={formData.mainContactId}
+        onChange={e => handleChange('mainContactId', e.target.value)}
+        placeholder='Main Contact ID'
         required
       />
       <Input
@@ -158,13 +156,25 @@ const AddCompanyForm = () => {
         placeholder='ZIP Code'
         required
       />
+      <Input
+        name='contactIDs'
+        value={formData.contactIDs.join(',')}
+        onChange={e => handleChange('contactIDs', e.target.value.split(','))}
+        placeholder='Contact IDs (comma-separated)'
+      />
+      <Input
+        name='userIDs'
+        value={formData.userIDs.join(',')}
+        onChange={e => handleChange('userIDs', e.target.value.split(','))}
+        placeholder='User IDs (comma-separated)'
+      />
       <Button
         type='submit'
         className='bg-blue-600 text-white'>
         Add Company
       </Button>
     </form>
-  )
-}
+  );
+};
 
-export default AddCompanyForm
+export default AddCompanyForm;

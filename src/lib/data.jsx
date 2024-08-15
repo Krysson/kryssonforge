@@ -4,14 +4,7 @@ import { prisma } from './prismaClient';
 export async function fetchContacts() {
   try {
     console.log('Attempting to fetch contacts...');
-    const contacts = await prisma.contact.findMany({
-      include: {
-        company: true,
-        projects: true,
-        tasks: true,
-        mainContactFor: true
-      }
-    });
+    const contacts = await prisma.contact.findMany();
     console.log('Contacts fetched successfully:', contacts.length);
     return contacts;
   } catch (error) {

@@ -5,18 +5,16 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function GET() {
+  console.log('GET /api/contacts: Starting request');
   try {
-    const contacts = await prisma.contact.findMany({
-      include: {
-        company: true,
-        projects: true,
-        tasks: true,
-        mainContactFor: true
-      }
-    });
+    const contacts = await prisma.contact.findMany();
+
+    console.log('GET /api/contacts: Fetched contacts', contacts);
+
     return NextResponse.json(contacts);
   } catch (error) {
-    console.error('Failed to fetch contacts:', error);
+    console.error('GET /api/contacts: Failed to fetch contacts:', error);
+
     return NextResponse.json({ error: 'Failed to fetch contacts' }, { status: 500 });
   }
 }
@@ -30,16 +28,7 @@ export async function POST(request) {
         lastName: data.lastName,
         email: data.email,
         phone: data.phone,
-        role: data.role,
-        company: { connect: { id: data.companyId } },
-        projects: { connect: data.projectIDs?.map(id => ({ id })) || [] },
-        tasks: { connect: data.taskIDs?.map(id => ({ id })) || [] }
-      },
-      include: {
-        company: true,
-        projects: true,
-        tasks: true,
-        mainContactFor: true
+        role: data.role
       }
     });
     return NextResponse.json(contact, { status: 201 });
@@ -59,16 +48,7 @@ export async function PUT(request) {
         lastName: data.lastName,
         email: data.email,
         phone: data.phone,
-        role: data.role,
-        company: data.companyId ? { connect: { id: data.companyId } } : undefined,
-        projects: data.projectIDs ? { set: data.projectIDs.map(id => ({ id })) } : undefined,
-        tasks: data.taskIDs ? { set: data.taskIDs.map(id => ({ id })) } : undefined
-      },
-      include: {
-        company: true,
-        projects: true,
-        tasks: true,
-        mainContactFor: true
+        role: data.role
       }
     });
     return NextResponse.json(updatedContact);

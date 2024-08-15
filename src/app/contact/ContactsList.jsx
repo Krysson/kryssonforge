@@ -49,8 +49,6 @@ const ContactsList = ({ initialContacts }) => {
             <TableHead>Email</TableHead>
             <TableHead>Phone</TableHead>
             <TableHead>Role</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead>Projects</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -62,10 +60,6 @@ const ContactsList = ({ initialContacts }) => {
               <TableCell>{contact.email}</TableCell>
               <TableCell>{contact.phone}</TableCell>
               <TableCell>{contact.role}</TableCell>
-              <TableCell>{contact.company?.name || 'N/A'}</TableCell>
-              <TableCell>
-                {contact.projects?.map(project => project.name).join(', ') || 'N/A'}
-              </TableCell>
               <TableCell>
                 <Button variant='secondary'>Edit</Button>
                 <Button variant='destructive'>Delete</Button>
