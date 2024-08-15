@@ -2,16 +2,19 @@
 import { prisma } from './prismaClient';
 
 export async function fetchContacts() {
+  console.log('fetchContacts: Starting function');
   try {
-    console.log('Attempting to fetch contacts...');
+    console.log('fetchContacts: Attempting to fetch contacts...');
+    console.log('fetchContacts: prisma object:', prisma);
+    console.log('fetchContacts: prisma.contact:', prisma.contact);
     const contacts = await prisma.contact.findMany();
-    console.log('Contacts fetched successfully:', contacts.length);
+    console.log('fetchContacts: Contacts fetched successfully:', contacts.length);
     return contacts;
   } catch (error) {
-    console.error('Failed to fetch contacts. Error details:', error);
-    console.error('Error name:', error.name);
-    console.error('Error message:', error.message);
-    console.error('Error stack:', error.stack);
+    console.error('fetchContacts: Failed to fetch contacts. Error details:', error);
+    console.error('fetchContacts: Error name:', error.name);
+    console.error('fetchContacts: Error message:', error.message);
+    console.error('fetchContacts: Error stack:', error.stack);
     throw new Error('Failed to fetch contacts');
   }
 }

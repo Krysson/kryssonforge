@@ -5,16 +5,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function GET() {
-  console.log('GET /api/contacts: Starting request');
   try {
     const contacts = await prisma.contact.findMany();
-
-    console.log('GET /api/contacts: Fetched contacts', contacts);
-
     return NextResponse.json(contacts);
   } catch (error) {
-    console.error('GET /api/contacts: Failed to fetch contacts:', error);
-
+    console.error('Failed to fetch contacts:', error);
     return NextResponse.json({ error: 'Failed to fetch contacts' }, { status: 500 });
   }
 }
