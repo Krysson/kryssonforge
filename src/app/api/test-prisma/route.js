@@ -1,6 +1,6 @@
 // src/app/api/test-prisma/route.js
-import { prisma } from '../../lib/prismaClient';
-
+import { prisma } from '@/lib/prismaClient';
+src / lib / prismaClient.jsx;
 export default async function handler(req, res) {
   try {
     const contacts = await prisma.contact.findMany({
