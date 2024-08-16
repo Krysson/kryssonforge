@@ -1,47 +1,66 @@
-// tasks/add/page.jsx - for adding tasks
-'use client'
+// src/app/tasks/add/page.jsx
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import React, { useState, useEffect } from 'react';
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
-import { Checkbox } from '@/components/ui/checkbox'
+} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const AddTaskPage = () => {
-  const router = useRouter()
-  const [selectedUsers, setSelectedUsers] = useState([])
-  const [projects, setProjects] = useState([])
-  const [users, setUsers] = useState([])
+  const router = useRouter();
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch projects and users from your API
     const fetchData = async () => {
-      const projectsResponse = await fetch('/api/projects')
-      const projectsData = await projectsResponse.json()
-      setProjects(projectsData)
+      setIsLoading(true);
+      try {
+        const projectsResponse = await fetch('/api/projects');
+        const projectsData = await projectsResponse.json();
+        setProjects(Array.isArray(projectsData) ? projectsData : []);
 
-      const usersResponse = await fetch('/api/users')
-      const usersData = await usersResponse.json()
-      setUsers(usersData)
-    }
-    fetchData()
-  }, [])
+        const usersResponse = await fetch('/api/users');
+        const usersData = await usersResponse.json();
+        setUsers(Array.isArray(usersData) ? usersData : []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('Failed to load necessary data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleSubmit = async event => {
-    event.preventDefault()
-    const formData = new FormData(event.target)
-    const taskData = Object.fromEntries(formData.entries())
-    taskData.userIds = selectedUsers.map(user => user.id)
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const taskData = Object.fromEntries(formData.entries());
+
+    // Convert dates to ISO format
+    taskData.startDate = new Date(taskData.startDate).toISOString();
+    taskData.endDate = new Date(taskData.endDate).toISOString();
+    taskData.dueDate = new Date(taskData.dueDate).toISOString();
+
+    // Add selected users
+    taskData.userIds = selectedUsers.map(user => user.id);
+
+    // Set default order
+    taskData.order = 0;
 
     try {
       const response = await fetch('/api/tasks', {
@@ -50,23 +69,30 @@ const AddTaskPage = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(taskData)
-      })
+      });
 
       if (response.ok) {
-        router.push('/tasks')
+        router.push('/tasks');
       } else {
-        console.error('Failed to add task')
+        const errorData = await response.json();
+        setError(`Failed to add task: ${errorData.error}`);
+        console.error('Failed to add task:', errorData.error);
+        // Here you might want to show an error message to the user
       }
     } catch (error) {
-      console.error('Error adding task:', error)
+      console.error('Error adding task:', error);
+      setError('An unexpected error occurred. Please try again.');
     }
-  }
+  };
 
   const handleUserToggle = user => {
     setSelectedUsers(prev =>
       prev.some(u => u.id === user.id) ? prev.filter(u => u.id !== user.id) : [...prev, user]
-    )
-  }
+    );
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className='container mx-auto p-4 pl-10 max-w-2xl'>
@@ -95,6 +121,26 @@ const AddTaskPage = () => {
               />
             </div>
             <div className='space-y-2'>
+              <Label htmlFor='startDate'>Start Date</Label>
+              <Input
+                id='startDate'
+                name='startDate'
+                type='date'
+                className='w-full'
+                required
+              />
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='endDate'>End Date</Label>
+              <Input
+                id='endDate'
+                name='endDate'
+                type='date'
+                className='w-full'
+                required
+              />
+            </div>
+            <div className='space-y-2'>
               <Label htmlFor='dueDate'>Due Date</Label>
               <Input
                 id='dueDate'
@@ -106,26 +152,20 @@ const AddTaskPage = () => {
             </div>
             <div className='space-y-2'>
               <Label htmlFor='status'>Status</Label>
-              <Select
-                id='status'
-                name='status'>
+              <Select name='status'>
                 <SelectTrigger>
                   <SelectValue placeholder='Select status' />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value='Not Started'>Not Started</SelectItem>
+                  <SelectItem value='Todo'>Todo</SelectItem>
                   <SelectItem value='In Progress'>In Progress</SelectItem>
-                  <SelectItem value='Stuck'>Stuck</SelectItem>
-                  <SelectItem value='Waiting'>Waiting</SelectItem>
                   <SelectItem value='Done'>Done</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className='space-y-2'>
               <Label htmlFor='priority'>Priority</Label>
-              <Select
-                id='priority'
-                name='priority'>
+              <Select name='priority'>
                 <SelectTrigger>
                   <SelectValue placeholder='Select priority' />
                 </SelectTrigger>
@@ -133,7 +173,6 @@ const AddTaskPage = () => {
                   <SelectItem value='Low'>Low</SelectItem>
                   <SelectItem value='Medium'>Medium</SelectItem>
                   <SelectItem value='High'>High</SelectItem>
-                  <SelectItem value='Urgent'>Urgent</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -148,9 +187,7 @@ const AddTaskPage = () => {
             </div>
             <div className='space-y-2'>
               <Label htmlFor='projectId'>Project</Label>
-              <Select
-                id='projectId'
-                name='projectId'>
+              <Select name='projectId'>
                 <SelectTrigger>
                   <SelectValue placeholder='Select project' />
                 </SelectTrigger>
@@ -158,7 +195,7 @@ const AddTaskPage = () => {
                   {projects.map(project => (
                     <SelectItem
                       key={project.id}
-                      value={project.id.toString()}>
+                      value={project.id}>
                       {project.name}
                     </SelectItem>
                   ))}
@@ -180,7 +217,7 @@ const AddTaskPage = () => {
                     <label
                       htmlFor={`user-${user.id}`}
                       className='text-sm'>
-                      {user.name}
+                      {user.firstName} {user.lastName}
                     </label>
                   </div>
                 ))}
@@ -198,7 +235,7 @@ const AddTaskPage = () => {
         </form>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default AddTaskPage
+export default AddTaskPage;

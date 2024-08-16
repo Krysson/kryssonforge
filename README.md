@@ -2,6 +2,14 @@
 
 ##### Let's Level Up Together / KryssonForge
 
+IF YOU HAVE ALTERED THE PRISMA SCHEMA OR SET UP IN ANOTHER BRANCH
+
+- YOU MUST
+- when switching back to branch `main`
+  - run `npx prisma generate` and
+  - `npx prisma db push` and
+  - Check the `package.json` file for new installs
+
 ---
 
 ## Getting Started
