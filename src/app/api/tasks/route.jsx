@@ -9,12 +9,13 @@ export async function GET() {
     const tasks = await prisma.task.findMany({
       include: {
         project: true,
-        users: true,
-        contacts: true
-      }
+        users: true
+      },
+      orderBy: [{ status: 'asc' }, { order: 'asc' }, { createdAt: 'desc' }]
     });
     return NextResponse.json(tasks);
   } catch (error) {
+    console.error('Failed to fetch tasks:', error);
     return NextResponse.json({ error: 'Failed to fetch tasks' }, { status: 500 });
   }
 }
@@ -24,15 +25,23 @@ export async function POST(request) {
     const data = await request.json();
     const task = await prisma.task.create({
       data: {
-        ...data,
+        title: data.title,
+        body: data.body,
+        status: data.status,
+        priority: data.priority,
+        category: data.category,
+        startDate: new Date(data.startDate),
+        endDate: new Date(data.endDate),
+        dueDate: new Date(data.dueDate),
+        order: data.order,
         project: data.projectId ? { connect: { id: data.projectId } } : undefined,
-        users: { connect: data.userIDs.map(id => ({ id })) },
-        contacts: { connect: data.contactIDs.map(id => ({ id })) }
+        users: {
+          connect: data.userIds.map(id => ({ id }))
+        }
       },
       include: {
         project: true,
-        users: true,
-        contacts: true
+        users: true
       }
     });
     return NextResponse.json(task, { status: 201 });

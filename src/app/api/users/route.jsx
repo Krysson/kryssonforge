@@ -9,33 +9,16 @@ export async function GET() {
     const users = await prisma.user.findMany({
       select: {
         id: true,
+        clerkId: true,
         firstName: true,
         lastName: true,
         username: true,
         emailAddress: true,
         imageUrl: true,
-        projects: {
-          select: {
-            id: true,
-            name: true
-          }
-        },
         tasks: {
           select: {
             id: true,
             title: true
-          }
-        },
-        companies: {
-          select: {
-            id: true,
-            name: true
-          }
-        },
-        managedProjects: {
-          select: {
-            id: true,
-            name: true
           }
         }
       }
@@ -58,15 +41,10 @@ export async function POST(request) {
         username: data.username,
         emailAddress: data.emailAddress,
         imageUrl: data.imageUrl,
-        projects: { connect: data.projectIDs?.map(id => ({ id })) || [] },
-        tasks: { connect: data.taskIDs?.map(id => ({ id })) || [] },
-        companies: { connect: data.companyIDs?.map(id => ({ id })) || [] }
+        tasks: { connect: data.taskIDs?.map(id => ({ id })) || [] }
       },
       include: {
-        projects: true,
-        tasks: true,
-        companies: true,
-        managedProjects: true
+        tasks: true
       }
     });
     return NextResponse.json(user, { status: 201 });
@@ -87,15 +65,10 @@ export async function PUT(request) {
         username: data.username,
         emailAddress: data.emailAddress,
         imageUrl: data.imageUrl,
-        projects: data.projectIDs ? { set: data.projectIDs.map(id => ({ id })) } : undefined,
-        tasks: data.taskIDs ? { set: data.taskIDs.map(id => ({ id })) } : undefined,
-        companies: data.companyIDs ? { set: data.companyIDs.map(id => ({ id })) } : undefined
+        tasks: data.taskIDs ? { set: data.taskIDs.map(id => ({ id })) } : undefined
       },
       include: {
-        projects: true,
-        tasks: true,
-        companies: true,
-        managedProjects: true
+        tasks: true
       }
     });
     return NextResponse.json(updatedUser);
