@@ -3,164 +3,125 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { MoreHorizontal, Plus, ListTodo, Search } from 'lucide-react';
+import { Plus, ListTodo, Search, Table as TableIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 import Link from 'next/link';
+import { DragDropContext } from '@hello-pangea/dnd';
+import TableView from './TableView';
+import KanbanView from './KanbanView';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import ErrorMessage from '@/components/ErrorMessage';
+import { set } from 'mongoose';
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
-  const [isCardView, setIsCardView] = useState(false);
+  const [view, setView] = useState('table');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch('/api/projects');
         if (response.ok) {
           const data = await response.json();
+          console.log('Fetched projects:', data); // Add this line
           setProjects(data);
         } else {
           console.error('Failed to fetch projects');
         }
       } catch (error) {
         console.error('Error fetching projects:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchProjects();
   }, []);
 
-  const ProjectCard = ({ project }) => (
-    <Card className='bg-gray-50 rounded-lg p-6 mb-4 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer'>
-      <div>
-        <h2 className='text-2xl font-bold mb-2'>{project.name}</h2>
-        <p className='text-black mb-1'>Project Number: {project.number}</p>
-        <p className='text-black mb-1'>Location: {project.location}</p>
-        <p className='text-black mb-1'>Project Manager: {project.projectManager}</p>
-        <p className='text-black mb-1'>General Contractor: {project.generalContractor}</p>
-        <p className='text-black mb-1'>Contract Price: {project.contractPrice}</p>
-        <p className='text-black mb-1'>
-          Project Status:{' '}
-          <Badge
-            variant={
-              project.status === 'Stuck' || project.status === 'Waiting' ? 'destructive' : 'outline'
-            }
-            className='mr-1 text-xs'>
-            {project.status}
-          </Badge>
-        </p>
-        <div className='mt-2'>
-          <div className='text-black mb-1'>Completion: {project.completionPercentage}%</div>
-          <div className='w-full bg-gray-400 rounded-full h-2.5'>
-            <div
-              className='bg-green-500 h-2.5 rounded-full'
-              style={{ width: `${project.completionPercentage}%` }}></div>
-          </div>
-        </div>
-      </div>
-    </Card>
+  const handleDragEnd = async result => {
+    if (!result.destination) return;
+
+    const { source, destination, draggableId } = result;
+
+    if (source.droppableId !== destination.droppableId) {
+      const newProjects = Array.from(projects);
+      const [movedProject] = newProjects.splice(source.index, 1);
+      movedProject.status = destination.droppableId;
+      newProjects.splice(destination.index, 0, movedProject);
+
+      setProjects(newProjects);
+
+      // Update the project in the database
+      try {
+        const response = await fetch(`/api/projects/${draggableId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: destination.droppableId })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to update project: ${response.status} ${response.statusText}`);
+        }
+
+        const updatedProject = await response.json();
+        console.log('Project updated successfully:', updatedProject);
+      } catch (error) {
+        console.error('Error updating project:', error);
+        // Revert the state if the API call fails
+        setProjects(projects);
+      }
+    }
+  };
+
+  const filteredProjects = projects.filter(project =>
+    project.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage message={error} />;
 
   return (
     <div className='container mx-auto p-4 pl-10 max-w-full'>
       <div className='flex justify-between items-center mb-6'>
         <h1 className='text-2xl font-bold'>Projects</h1>
-        <div className='flex items-center space-x-4'>
-          <div className='flex items-center space-x-2'>
-            <Label htmlFor='view-mode'>Table View</Label>
-            <Switch
-              id='view-mode'
-              checked={isCardView}
-              onCheckedChange={setIsCardView}
-            />
-            <Label htmlFor='view-mode'>Card View</Label>
-          </div>
-          <div className='relative'>
-            <Input
-              type='text'
-              placeholder='Search projects...'
-              className='pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-            />
-            <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
-          </div>
-          <Link href='/projects/add'>
-            <Button>
-              <Plus className='mr-2 h-4 w-4' /> Add Project
-            </Button>
-          </Link>
+        <Link href='/projects/add'>
+          <Button>
+            <Plus className='mr-2 h-4 w-4' /> Add Project
+          </Button>
+        </Link>
+      </div>
+
+      <div className='flex justify-between items-center mb-4'>
+        <Input
+          type='text'
+          placeholder='Search projects...'
+          className='max-w-sm'
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+        <div className='flex space-x-2'>
+          <Button
+            variant={view === 'table' ? 'default' : 'outline'}
+            onClick={() => setView('table')}>
+            <TableIcon className='mr-2 h-4 w-4' /> Table
+          </Button>
+          <Button
+            variant={view === 'kanban' ? 'default' : 'outline'}
+            onClick={() => setView('kanban')}>
+            <ListTodo className='mr-2 h-4 w-4' /> Kanban
+          </Button>
         </div>
       </div>
 
-      {!isCardView ? (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Number</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Completion</TableHead>
-              <TableHead>Project Manager</TableHead>
-              <TableHead className='text-right'></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {projects.map(project => (
-              <TableRow key={project.id}>
-                <TableCell className='font-medium'>{project.name}</TableCell>
-                <TableCell>{project.number}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      project.status === 'Stuck' || project.status === 'Waiting'
-                        ? 'destructive'
-                        : 'outline'
-                    }>
-                    {project.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>{project.completionPercentage}%</TableCell>
-                <TableCell>{project.projectManager}</TableCell>
-                <TableCell className='text-right'>
-                  <Button
-                    variant='ghost'
-                    size='icon'>
-                    <MoreHorizontal className='h-4 w-4' />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-          {projects.map(project => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-            />
-          ))}
-        </div>
-      )}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        {view === 'table' && <TableView projects={filteredProjects} />}
+        {view === 'kanban' && <KanbanView projects={filteredProjects} />}
+      </DragDropContext>
     </div>
   );
 };
