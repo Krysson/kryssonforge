@@ -1,21 +1,21 @@
-//  Project Views Page
+//  src/app/projects/page.jsx
 
-'use client'
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import { Card, CardHeader, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { MoreHorizontal, Plus, ListTodo, Search } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import React, { useState, useEffect } from 'react';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { MoreHorizontal, Plus, ListTodo, Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/select'
+} from '@/components/ui/select';
 import {
   Table,
   TableBody,
@@ -23,32 +23,32 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/ui/table'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
-import Link from 'next/link'
+} from '@/components/ui/table';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import Link from 'next/link';
 
 const ProjectsPage = () => {
-  const [projects, setProjects] = useState([])
-  const [isCardView, setIsCardView] = useState(false)
+  const [projects, setProjects] = useState([]);
+  const [isCardView, setIsCardView] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('/api/projects')
+        const response = await fetch('/api/projects');
         if (response.ok) {
-          const data = await response.json()
-          setProjects(data)
+          const data = await response.json();
+          setProjects(data);
         } else {
-          console.error('Failed to fetch projects')
+          console.error('Failed to fetch projects');
         }
       } catch (error) {
-        console.error('Error fetching projects:', error)
+        console.error('Error fetching projects:', error);
       }
-    }
+    };
 
-    fetchProjects()
-  }, [])
+    fetchProjects();
+  }, []);
 
   const ProjectCard = ({ project }) => (
     <Card className='bg-gray-50 rounded-lg p-6 mb-4 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer'>
@@ -79,7 +79,7 @@ const ProjectsPage = () => {
         </div>
       </div>
     </Card>
-  )
+  );
 
   return (
     <div className='container mx-auto p-4 pl-10 max-w-full'>
@@ -87,12 +87,13 @@ const ProjectsPage = () => {
         <h1 className='text-2xl font-bold'>Projects</h1>
         <div className='flex items-center space-x-4'>
           <div className='flex items-center space-x-2'>
-            <Label htmlFor='view-mode'>Card View</Label>
+            <Label htmlFor='view-mode'>Table View</Label>
             <Switch
               id='view-mode'
               checked={isCardView}
               onCheckedChange={setIsCardView}
             />
+            <Label htmlFor='view-mode'>Card View</Label>
           </div>
           <div className='relative'>
             <Input
@@ -161,7 +162,7 @@ const ProjectsPage = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProjectsPage
+export default ProjectsPage;
