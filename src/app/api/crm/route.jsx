@@ -1,4 +1,5 @@
-// src/app/api/companies/route.js
+// src/app/api/crm/route.jsx
+
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
@@ -20,8 +21,21 @@ export async function GET() {
 export async function POST(request) {
   try {
     const data = await request.json();
+    const companyData = {
+      name: data.name,
+      companyNumber: data.companyNumber,
+      mainPhone: data.mainPhone,
+      status: data.status,
+      contacts: {
+        create: data.contacts
+      }
+    };
+
     const company = await prisma.company.create({
-      data
+      data: companyData,
+      include: {
+        contacts: true
+      }
     });
     return NextResponse.json(company, { status: 201 });
   } catch (error) {

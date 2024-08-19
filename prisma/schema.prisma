@@ -59,21 +59,26 @@ model User {
 model Company {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  companyNumber String
-  address       Address
+  companyNumber String  @unique
   mainPhone     String
-  createdDate   DateTime
-  updatedDate   DateTime
   status        String
+  contacts      Contacts[]
+  address       Address
+  createdDate   DateTime  @default(now())
+  updatedDate   DateTime  @updatedAt
 }
 
-model Contact {
+model Contacts {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   firstName String
   lastName  String
   email     String
   phone     String
   role      String
+  companyId String @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model File {

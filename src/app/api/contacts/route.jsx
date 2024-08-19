@@ -6,10 +6,13 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const contacts = await prisma.contact.findMany();
+    const contacts = await prisma.contacts.findMany({
+      include: {
+        company: true
+      }
+    });
     return NextResponse.json(contacts);
   } catch (error) {
-    console.error('Failed to fetch contacts:', error);
     return NextResponse.json({ error: 'Failed to fetch contacts' }, { status: 500 });
   }
 }
@@ -17,49 +20,15 @@ export async function GET() {
 export async function POST(request) {
   try {
     const data = await request.json();
-    const contact = await prisma.contact.create({
-      data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phone: data.phone,
-        role: data.role
-      }
+    const contact = await prisma.contacts.create({
+      data
     });
     return NextResponse.json(contact, { status: 201 });
   } catch (error) {
     console.error('Failed to create contact:', error);
-    return NextResponse.json({ error: 'Failed to create contact' }, { status: 500 });
-  }
-}
-
-export async function PUT(request) {
-  try {
-    const { id, ...data } = await request.json();
-    const updatedContact = await prisma.contact.update({
-      where: { id },
-      data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phone: data.phone,
-        role: data.role
-      }
-    });
-    return NextResponse.json(updatedContact);
-  } catch (error) {
-    console.error('Failed to update contact:', error);
-    return NextResponse.json({ error: 'Failed to update contact' }, { status: 500 });
-  }
-}
-
-export async function DELETE(request) {
-  try {
-    const { id } = await request.json();
-    await prisma.contact.delete({ where: { id } });
-    return NextResponse.json({ message: 'Contact deleted successfully' });
-  } catch (error) {
-    console.error('Failed to delete contact:', error);
-    return NextResponse.json({ error: 'Failed to delete contact' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to create contact', details: error.message },
+      { status: 500 }
+    );
   }
 }
