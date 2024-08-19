@@ -10,12 +10,16 @@ import {
   Home,
   Building,
   ContactRound,
+  CalendarRange,
   FolderGit2,
   ListTodo,
+  MapPin,
   FileStack,
   LogIn,
   SquareChartGantt,
+  MessagesSquare,
   UserPlus,
+  BotMessageSquare,
   User
 } from 'lucide-react';
 
@@ -52,12 +56,14 @@ const HeaderWithSidebar = () => {
   const menuItems = [
     { href: '/', icon: Home, label: 'Home' },
     { href: '/about', icon: User, label: 'My Company' },
-    { href: '/company', icon: Building, label: 'Company' },
-    { href: '/contact', icon: ContactRound, label: 'Contacts' },
+    { href: '/field', icon: MapPin, label: 'Field' },
+    { href: '/realtime', icon: MessagesSquare, label: 'Video / Chat' },
+    { href: '/crm', icon: Building, label: 'CRM' },
     { href: '/projects', icon: FolderGit2, label: 'Projects' },
-    { href: '/schedule', icon: SquareChartGantt, label: 'Project Schedule' },
     { href: '/tasks', icon: ListTodo, label: 'Tasks' },
-    { href: '/files', icon: FileStack, label: 'Documents' }
+    { href: '/schedule', icon: CalendarRange, label: 'Calendar' },
+    { href: '/files', icon: FileStack, label: 'Documents' },
+    { href: '/ai-chat', icon: BotMessageSquare, label: 'Forge Chat' }
   ];
 
   return (
@@ -108,6 +114,7 @@ const HeaderWithSidebar = () => {
                 <li key={index}>
                   <Link
                     href={item.href}
+                    title={item.label}
                     className='flex items-center p-4 hover:bg-gray-700'>
                     <item.icon className='h-5 w-5' />
                     {!isCollapsed && <span className='ml-4'>{item.label}</span>}
