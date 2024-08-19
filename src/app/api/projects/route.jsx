@@ -11,7 +11,10 @@ export async function GET() {
         id: true,
         name: true,
         description: true,
-        status: true
+        status: true,
+        number: true,
+        generalContractor: true,
+        completionPercentage: true
       }
     });
     return NextResponse.json(projects);
@@ -44,6 +47,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });
   }
 }
+
 export async function PUT(request) {
   try {
     const { id, ...data } = await request.json();
