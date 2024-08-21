@@ -117,6 +117,12 @@ const HeaderWithSidebar = () => {
                   <Link
                     href={item.href}
                     title={item.label}
+                    target={item.href === 'https://kryssonvid.vercel.app/' ? '_blank' : '_self'}
+                    rel={
+                      item.href === 'https://kryssonvid.vercel.app/'
+                        ? 'noopener noreferrer'
+                        : undefined
+                    }
                     className='flex items-center p-4 hover:bg-gray-700'>
                     <item.icon className='h-5 w-5' />
                     {!isCollapsed && <span className='ml-4'>{item.label}</span>}
