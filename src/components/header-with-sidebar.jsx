@@ -58,6 +58,7 @@ const HeaderWithSidebar = () => {
     { href: '/myco', icon: User, label: 'My Company' },
     { href: '/field', icon: MapPin, label: 'Field' },
     { href: 'https://kryssonvid.vercel.app/', icon: MessagesSquare, label: 'Video / Chat' },
+    { href: '/realtime', icon: Building, label: 'Real-Time' },
     { href: '/crm', icon: Building, label: 'CRM' },
     { href: '/projects', icon: FolderGit2, label: 'Projects' },
     { href: '/tasks', icon: ListTodo, label: 'Tasks' },
