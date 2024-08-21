@@ -1,26 +1,50 @@
 // src/components/FooterLinks.jsx
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 
 const FooterLinks = () => {
   const linkSections = [
     {
       title: 'Product',
-      links: ['Overview', 'Features', 'Solutions', 'Tutorials', 'Pricing']
+      links: [
+        { name: 'Overview', url: '/overview' },
+        { name: 'Features', url: '/features' },
+        { name: 'Solutions', url: '/solutions' },
+        { name: 'Tutorials', url: '/tutorial' },
+        { name: 'Pricing', url: '/pricing' }
+      ]
     },
     {
       title: 'Company',
-      links: ['About us', 'Careers', 'Press', 'News', 'Contact']
+      links: [
+        { name: 'About Us', url: '/about' },
+        { name: 'Careers', url: '/careers' },
+        { name: 'Press', url: '/press' },
+        { name: 'News', url: '/news' },
+        { name: 'Contact', url: '/cont' }
+      ]
     },
     {
       title: 'Resources',
-      links: ['Blog', 'Newsletter', 'Events', 'Help center', 'Tutorials']
+      links: [
+        { name: 'Blog', url: '/blog' },
+        { name: 'Newsletter', url: '/newsletter' },
+        { name: 'Events', url: '/events' },
+        { name: 'Help Center', url: '/help' },
+        { name: 'Tutorial', url: '/tutorial' }
+      ]
     },
     {
       title: 'Legal',
-      links: ['Terms', 'Privacy', 'Cookies', 'Licenses', 'Settings']
+      links: [
+        { name: 'Terms', url: '/terms' },
+        { name: 'Privacy', url: '/privacy' },
+        { name: 'Cookies', url: '/cookies' },
+        { name: 'Licenses', url: '/licenses' },
+        { name: 'Settings', url: '/settings' }
+      ]
     }
-  ]
+  ];
 
   return (
     <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
@@ -33,9 +57,9 @@ const FooterLinks = () => {
                 key={linkIndex}
                 className='mb-2'>
                 <Link
-                  href='#'
+                  href={link.url}
                   className='text-base text-gray-300 hover:text-white'>
-                  {link}
+                  {link.name}
                 </Link>
               </li>
             ))}
@@ -43,7 +67,7 @@ const FooterLinks = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default FooterLinks
+export default FooterLinks;

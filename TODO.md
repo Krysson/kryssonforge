@@ -13,6 +13,7 @@
   - [x] Footer
     - [x] style
     - [ ] **Function**
+      - [x] Footer links Function
   - [x] Card Section
   - [ ] Pricing section
 

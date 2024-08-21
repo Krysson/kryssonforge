@@ -28,7 +28,9 @@ const Footer = () => {
           <div className='flex space-x-6 mt-4 md:mt-0'>
             <Link
               href='#'
-              className='text-gray-400 hover:text-white'>
+              className='text-gray-400 hover:text-white'
+              target='_blank'
+              rel='noopener noreferrer'>
               <span className='sr-only'>Facebook</span>
               <svg
                 className='h-6 w-6'
@@ -44,7 +46,9 @@ const Footer = () => {
             </Link>
             <Link
               href='#'
-              className='text-gray-400 hover:text-white'>
+              className='text-gray-400 hover:text-white'
+              target='_blank'
+              rel='noopener noreferrer'>
               <span className='sr-only'>Instagram</span>
               <svg
                 className='h-6 w-6'
@@ -60,7 +64,9 @@ const Footer = () => {
             </Link>
             <Link
               href='#'
-              className='text-gray-400 hover:text-white'>
+              className='text-gray-400 hover:text-white'
+              target='_blank'
+              rel='noopener noreferrer'>
               <span className='sr-only'>Twitter</span>
               <svg
                 className='h-6 w-6'
@@ -71,8 +77,10 @@ const Footer = () => {
               </svg>
             </Link>
             <Link
-              href='#'
-              className='text-gray-400 hover:text-white'>
+              href='https://github.com/Krysson/kryssonforge'
+              className='text-gray-400 hover:text-white'
+              target='_blank'
+              rel='noopener noreferrer'>
               <span className='sr-only'>GitHub</span>
               <svg
                 className='h-6 w-6'

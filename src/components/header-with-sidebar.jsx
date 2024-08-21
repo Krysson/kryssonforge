@@ -55,7 +55,7 @@ const HeaderWithSidebar = () => {
 
   const menuItems = [
     { href: '/', icon: Home, label: 'Home' },
-    { href: '/about', icon: User, label: 'My Company' },
+    { href: '/myco', icon: User, label: 'My Company' },
     { href: '/field', icon: MapPin, label: 'Field' },
     { href: '/realtime', icon: MessagesSquare, label: 'Video / Chat' },
     { href: '/crm', icon: Building, label: 'CRM' },
@@ -63,7 +63,7 @@ const HeaderWithSidebar = () => {
     { href: '/tasks', icon: ListTodo, label: 'Tasks' },
     { href: '/schedule', icon: CalendarRange, label: 'Calendar' },
     { href: '/files', icon: FileStack, label: 'Documents' },
-    { href: '/ai-chat', icon: BotMessageSquare, label: 'Forge Chat' }
+    { href: '/ai', icon: BotMessageSquare, label: 'Forge Chat' }
   ];
 
   return (
