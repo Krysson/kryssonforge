@@ -1,7 +1,7 @@
 // src/components/Footer.jsx
-import React from 'react'
-import Link from 'next/link'
-import FooterLinks from './footerLinks'
+import React from 'react';
+import Link from 'next/link';
+import FooterLinks from './footerLinks';
 
 const Footer = () => {
   return (
@@ -24,6 +24,7 @@ const Footer = () => {
         </div>
         <div className='border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center'>
           <p>&copy; {new Date().getFullYear()} KryssonForge. All rights reserved.</p>
+          <div className='hover:text-slate-400 text-slate-100/20'>Demo Functionality Only</div>
           <div className='flex space-x-6 mt-4 md:mt-0'>
             <Link
               href='#'
@@ -89,7 +90,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

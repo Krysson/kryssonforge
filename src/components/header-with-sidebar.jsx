@@ -76,10 +76,12 @@ const HeaderWithSidebar = () => {
           className='mr-4'>
           <Menu className='h-6 w-6' />
         </Button>
+
         <div className='flex-grow flex justify-center'>
           <Link href='/'>
             <h1 className='text-2xl font-bold mx-5 hover:bg-slate-700/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90'>
               Krysson<span className='text-red-700 font-extrabold'>Forge</span>
+              <div className='text-sm text-slate-100/20'>Demo Functionality Only</div>
             </h1>
           </Link>
         </div>
@@ -148,6 +150,7 @@ const HeaderWithSidebar = () => {
                 </>
               )}
             </SignedOut>
+
             <SignedIn>
               <div
                 className={`flex items-center ${
@@ -157,6 +160,7 @@ const HeaderWithSidebar = () => {
                 {!isCollapsed && <span className='ml-2'>Account</span>}
               </div>
             </SignedIn>
+            <div className='hover:text-slate-400 text-slate-100/20'>Demo Functionality Only</div>
           </div>
         </div>
       </div>
