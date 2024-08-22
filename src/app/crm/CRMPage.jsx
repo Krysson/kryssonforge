@@ -22,6 +22,14 @@ import {
 import Link from 'next/link';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorMessage from '@/components/ErrorMessage';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 
 const CRMPage = () => {
   const [companies, setCompanies] = useState([]);
@@ -70,9 +78,9 @@ const CRMPage = () => {
 
   return (
     <div className='container mx-auto p-4'>
-      <h1 className='text-2xl font-bold mb-6'>CRM</h1>
-      <div className='flex justify-between mb-4 items-center'>
-        <div className='flex space-x-2'>
+      <h1 className='text-xl sm:text-2xl font-bold mb-4 sm:mb-6'>CRM</h1>
+      <div className='flex flex-col sm:flex-row justify-between mb-4 items-center'>
+        <div className='hidden sm:flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4 sm:mb-0'>
           <Link href='/crm/add-company'>
             <Button variant='default'>Add Company</Button>
           </Link>
@@ -85,13 +93,33 @@ const CRMPage = () => {
             Show All Contacts
           </Button>
         </div>
-        <div className='flex space-x-2 w-2/3'>
+        <div className='sm:hidden pb-4'>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className='border-2 border-gray-500'
+                variant='secondary'>
+                Menu
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem asChild>
+                <Link href='/crm/add-company'>Add Company</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href='/crm/add-contact'>Add Contact</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={showAllContacts}>Show All Contacts</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className='flex w-full sm:w-2/3'>
           <Input
             type='text'
             placeholder='Search contacts...'
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className='mb-4 w-full'
+            className='w-full'
           />
           <Select onValueChange={setSelectedCompany}>
             <SelectTrigger>
@@ -144,12 +172,31 @@ const CRMPage = () => {
                 {companies.find(company => company.id === contact.companyId)?.name}
               </TableCell>
               <TableCell>
-                <Button
-                  variant='secondary'
-                  className='mx-2'>
-                  Edit
-                </Button>
-                <Button variant='destructive'>Delete</Button>
+                <div className='hidden sm:flex space-x-2'>
+                  <Button
+                    variant='secondary'
+                    className='mx-2'>
+                    Edit
+                  </Button>
+                  <Button variant='destructive'>Delete</Button>
+                </div>
+                <div className='sm:hidden'>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        className='border-gray-500 '
+                        variant='outline'>
+                        Menu
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onSelect={() => handleEdit(row.id)}>Edit</DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => handleDelete(row.id)}>
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </TableCell>
             </TableRow>
           ))}
