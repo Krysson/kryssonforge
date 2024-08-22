@@ -3,11 +3,15 @@
 ### General
 
 - [ ] Start working on user Dashboard
+  - [x] started - not liking it
 - [ ] Note taking ability
 - [ ] Real-Time
   - [ ] Chat
   - [ ] Video
-    - [ ] AI integration to video - [Build an AI-powered video conferencing app with STREAM](https://www.assemblyai.com/blog/video-conferencing-app-with-nextjs-and-stream/)
+    - [x] Video is active but needs some work to include notifications and person selection/search
+    - [x] AI integration to video - [Build an AI-powered video conferencing app with STREAM](https://www.assemblyai.com/blog/
+          video-conferencing-app-with-nextjs-and-stream/)
+      - [x] The framework is there, need to connect LLM
 - [x] Landing page
   - [x] Header
   - [x] Footer
@@ -15,7 +19,7 @@
     - [ ] **Function**
       - [x] Footer links Function
   - [x] Card Section
-  - [ ] Pricing section
+  - [ ] ~~Pricing section~~
 
 ---
 
@@ -45,11 +49,23 @@
 
 ---
 
+### Employees / Field
+
+- [ ] Employee DB
+- [ ] Employee groups
+- [ ] Employee work locations
+- [ ] Employee Information
+- [ ] Employee search
+- [ ] New Employee / Pre-Hire
+- [ ] Employee Scheduling
+
+---
+
 ### Projects
 
 - [x] New/Add Project page
-- [ ] Edit Project page
-- [ ] Delete Project functionality
+- [x] Edit Project page
+- [x] Delete Project functionality
 - [x] Project overview page
 - [ ] Ai Integration
   - [ ] suggested project tasks
