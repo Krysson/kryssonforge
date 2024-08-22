@@ -1,5 +1,12 @@
+import AddEmployeeForm from '@/components/addEmp';
+
 const FieldPage = () => {
-  return <div>Field Page</div>;
+  return (
+    <div>
+      <h1>Field Page</h1>
+      <AddEmployeeForm />
+    </div>
+  );
 };
 
 export default FieldPage;
