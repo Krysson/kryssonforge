@@ -1,5 +1,11 @@
-const dashboard = () => {
-  return <div className='text-3xl font-extrabold'>Dashboard Page</div>
-}
+import Dashboard from '@/components/Dashboard';
 
-export default dashboard
+const dashboard = () => {
+  return (
+    <div>
+      <Dashboard />
+    </div>
+  );
+};
+
+export default dashboard;
